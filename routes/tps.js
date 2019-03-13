@@ -5,12 +5,11 @@ const Tps = require('../models/tps');
 //@ROUTE: view tps
 Router.get('/:id',(req,res)=>{
     let tps = Tps.findByPk(req.params.id);
-
     Promise.all([tps]).then(values=>{
         // res.render('/tps',
         //     {tps:values[0]}
         // )
-    })
+    });
 })
 
 Router.get('/all',(req,res)=>{
