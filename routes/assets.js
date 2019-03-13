@@ -31,7 +31,9 @@ Router.post('/',upload.single('pic'),(req,res)=>{
         //pic:asset.pic, ---- TODO(file storage)
         tag:asset.tag,
         valuation:asset.valuation,
-        insuarance:asset.insuarance
+        insuarance:asset.insuarance,
+        typeId:asset.typeId,
+        tpsId:asset.tpsId
     });
     Promise.all([newAsset]).then(values=>{
         //res.render('/dashboard')
