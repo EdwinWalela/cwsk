@@ -46,26 +46,4 @@ Router.post('/:id',(req,res)=>{
     
 })
 
-
-
-
-//@ROUTE: create asset support
-Router.post('/:id/support',(req,res)=>{
-    let support = req.body;
-
-    let newSupport = Support({
-        name:support.name,
-        cost:support.cost,
-        details:support.details,
-        assetId:req.params.id
-    });
-
-    Promise.all([newSupport]).then(values=>{
-        //res.render('/dashboard',{})
-    }).catch(err=>{
-        console.log(err);
-        //res.render('/dashboard')'
-    });
-})
-
 module.exports = Router;    

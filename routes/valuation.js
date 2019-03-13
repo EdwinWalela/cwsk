@@ -1,7 +1,7 @@
 const Router = require('express').Router();
 const Valuation = require('../models/assetValuation');
 
-//@ROUTE: create asset valuation
+//@ROUTE: create asset valuation (req.params.id === assetId)
 Router.post('/:id/valuation',(req,res)=>{
     let valuation = req.body;
 
@@ -32,6 +32,7 @@ Router.get('/all',(req,res)=>{
     });
 })
 
+//@NOTE: req.params.id === valuation PK
 Router.get('/:id',(req,res)=>{
     let valuation = Valuation.findByPk(req.params.id);
 
