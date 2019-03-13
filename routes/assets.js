@@ -23,7 +23,7 @@ Router.get('/:id',(req,res)=>{
 })
 
 //@ROUTE: create asset
-Router.post('/',upload.single('pic'),(req,res)=>{
+Router.post('/',/*upload.single('pic'),*/(req,res)=>{
     let asset = req.body;
     let newAsset = Asset.create({
         name:asset.name,
@@ -45,7 +45,22 @@ Router.post('/',upload.single('pic'),(req,res)=>{
 
 //@ROUTE: update asset
 Router.post('/:id',(req,res)=>{
-    
-})
+    let asset = req.body;
+
+    let updateAsset = Asset.update({
+        name:asset.name.insuarance,
+        pic:asset.pic,
+        tag:asset.tag,
+        valuation:asset.valuation,
+        insuarance:asset.insuarance
+    });
+
+    Promise.all([updateAsset]).then(values=>{
+        //res.redirect('/dashboard');
+    }).catch(err=>{
+        console.log(err);
+        // res.render('/dashboard');
+    });
+});
 
 module.exports = Router;    
