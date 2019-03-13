@@ -20,7 +20,7 @@ Router.post('/:id/insurance',(req,res)=>{
     });
 });
 
-// req.params.id === insuarance PK
+//@NOTE: req.params.id === insuarance PK
 Router.get('/:id',(req,res)=>{
     let insuarance = Insuarance.findByPk(req.params.id);
     Promise.all([insuarance]).then(values=>{
