@@ -47,23 +47,6 @@ Router.post('/:id',(req,res)=>{
 })
 
 
-//@ROUTE: create asset valuation
-Router.post('/:id/valuation',(req,res)=>{
-    let valuation = req.body;
-
-    let newValuation = Valuation.create({
-        price_now:valuation.price_now,
-        details:valuation.details,
-        assetId:req.params.id
-    });
-
-    Promise.all([newValuation]).then(values=>{
-        //res.redirect('/dashboard');
-    }).catch(err=>{
-        console.log(err)
-        //res.redirect('/dashboard');
-    });
-})
 
 
 //@ROUTE: create asset support
