@@ -1,5 +1,6 @@
 const Router = require('express').Router();
 const upload = require('../config/fileStorage');
+const Asset = require("../models/assets");
 
 //@ROUTE: view asset
 Router.get('/:id',(req,res)=>{
@@ -7,8 +8,17 @@ Router.get('/:id',(req,res)=>{
 })
 
 //@ROUTE: create asset
-Router.post('/',(req,res)=>{
-    
+Router.post('/',upload.single('pic'),(req,res)=>{
+
+    let asset = req.body;
+    Asset.create({
+        id:asset.id,
+        name:asset.name,
+        //pic:asset.pic, ---- TODO(file storage)
+        tag:asset.tag,
+        valuation:asset.valuation,
+        insuarance:asset.insuarance
+    })
 })
 
 //@ROUTE: update asset
