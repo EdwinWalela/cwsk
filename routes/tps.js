@@ -46,7 +46,24 @@ Router.post('/',(req,res)=>{
 
 //@ROUTE: update tps
 Router.post('/:id',(req,res)=>{
-    
+    let tps = req.body;
+
+    let updateTps = Tps.update({
+        name:tps.name,
+        alias:tps.alias,
+        location:tps.location,
+        address:tps.address,
+        phone:tps.phone,
+        type:tps.type,
+        status:tps.status
+    });
+
+    Promise.all([updateTps]).then(values=>{
+        // res.render('/dashboard');
+    }).catch(err=>{
+        console.log(err)
+        // res.render('/dashboard');
+    });
 })
 
 
