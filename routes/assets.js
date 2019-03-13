@@ -46,24 +46,6 @@ Router.post('/:id',(req,res)=>{
     
 })
 
-//@ROUTE: create asset insuarance 
-Router.post('/:id/insurance',(req,res)=>{
-    let insuarance = req.body;
-
-    let newInsuarance = Insuarance.create({
-        name:insuarance.name,
-        cost:insuarance.cost,
-        details:insuarance.details,
-        assetId:req.params.id
-    });
-
-    Promise.all([newInsuarance]).then(values=>{
-        //res.redirect('')
-    }).catch(err=>{
-        console.log(err)
-        //res.redirect('')
-    });
-})
 
 //@ROUTE: create asset valuation
 Router.post('/:id/valuation',(req,res)=>{
