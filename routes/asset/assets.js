@@ -6,18 +6,20 @@ const Insurance = require('../../models/insurance');
 const Valuation = require('../../models/assetValuation');
 const Support = require('../../models/support');
 const Tps = require('../../models/tps');
+const Type = require('../../models/type');
 
 //@NOTE: req.params.id === assetID on all routes
 
 //@ROUTE: view asset
-Router.get('/',(req,res)=>{
-    let assets = Asset.findAll({});
+
+Router.get('/', (req,res)=>{
+    let assets = Asset.findAll({include: [Tps,Type]});
 
     Promise.all([assets]).then(values=>{
+        console.log(values[0]);
         res.render('asset/index',{assets:values[0]})
-    }).catch(err=>{
+    }).catch(err => {
         console.log(err);
-        //res.render('/',{asset:null});
     })
 });
 
@@ -25,11 +27,11 @@ Router.get('/',(req,res)=>{
 
 Router.get('/create',(req, res) => {
   let tps = Tps.findAll({});
-  Promise.all([tps]).then(values=>{
-      res.render('asset/create',{assets:values[0]});
+  let types = Type.findAll({});
+  Promise.all([tps,types]).then(values=>{
+      res.render('asset/create',{tps:values[0],types: values[1]});
   }).catch(err=>{
       console.log(err);
-      //res.render('/',{asset:null});
   })
 });
 
@@ -43,25 +45,22 @@ Router.post('/store',/*upload.single('pic'),*/(req,res)=>{
         tag:asset.tag,
         valuation:asset.valuation,
         insurance:asset.insurance,
-        typeId:asset.typeId,
-        tpsId:asset.tpsId
-    });
-    Promise.all([newAsset]).then(values=>{
-        //res.render('/dashboard')
+        typeId:asset.type,
+        tpsId:asset.tps
+    }).then(values => {
+        res.redirect('/assets');
     }).catch(err=>{
-        console.log(err)
-        //res.render('/dashboard')
+        console.log(err);
     });
 })
 
 
 Router.get('/edit/:id',(req, res) => {
-  let asset = Asset.findByPk(req.params.id);
-  Promise.all([asset]).then(values=>{
-      //res.render('/asset',
-      //     {asset:values[0]}
-      // )
-      res.render('asset/update',{asset:values[0]});
+  let asset = Asset.findByPk(req.params.id,{include: [Tps,Type]});
+  let tps = Tps.findAll({});
+  let types = Type.findAll({});
+  Promise.all([asset,tps,types]).then(values=>{
+      res.render('asset/update',{asset:values[0],tps:values[1],types:values[2]});
   }).catch(err=>{
       console.log(err);
       //res.render('/',{asset:null});
@@ -85,7 +84,7 @@ Router.post('/update/:id',(req,res)=>{
     });
 
     Promise.all([updateAsset]).then(values=>{
-        //res.redirect('/dashboard');
+        res.redirect('/assets');
     }).catch(err=>{
         console.log(err);
         // res.render('/dashboard');
@@ -94,7 +93,7 @@ Router.post('/update/:id',(req,res)=>{
 
 //@ROUTE: view asset
 Router.get('/:id',(req,res)=>{
-    let asset = Asset.findByPk(req.params.id);
+    let asset = Asset.findByPk(req.params.id, {include: [Tps,Type]});
 
     Promise.all([asset]).then(values=>{
         //res.render('/asset',

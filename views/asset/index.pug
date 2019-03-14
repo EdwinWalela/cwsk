@@ -20,8 +20,12 @@ block content
                   | Tag
                 th
                   | Valuation
-                th.text-center
+                th
                   | Insurance
+                th
+                  | Type 
+                th
+                  | Tps
                 th.text-center
                   | Actions
             tbody
@@ -30,15 +34,21 @@ block content
                   td
                     =d.name
                   td
-                    =d.location
+                    =d.tag
                   td
-                    =d.address
+                    =d.valuation
                   td
-                    =d.phone
+                    =d.insurance
+                  td
+                    if(d.typeId)
+                      =d.type.name
+                  td
+                    if(d.tpsId)
+                      =d.tp.name
                   td.text-center
-                    a.p-1(href='/asset/'+d.id title='View Asset')
+                    a.p-1(href='/assets/'+d.id title='View Asset')
                       i.fas.fa-eye
-                    a.p-1(href='/asset/edit/'+d.id title='Edit Asset')
+                    a.p-1(href='/assets/edit/'+d.id title='Edit Asset')
                       i.fas.fa-edit
                     a.p-1(href='#' title='Delete Asset')
                       i.fas.fa-trash

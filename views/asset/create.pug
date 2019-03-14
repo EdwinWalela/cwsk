@@ -8,39 +8,53 @@ block content
         h4.card-title  New Asset
         
       .card-body
-        form
-        .row
-          .col-md-3.pr-md-1
-            .form-group
-              label Name
-              input.form-control(type='text' placeholder='Company' name="name")
-          .col-md-3.px-md-1
-            .form-group
-              label Tag
-              input.form-control(type='text' placeholder='Tag' name='tag' )
-          .col-md-4.pl-md-1
-            .form-group
-              label(for='') Price
-              input.form-control(type='text' placeholder='Cost' name='price')
-        .row
-          .col-md-4.pr-md-1
-            .form-group
-              label Pic
-              input.form-control(type='file' placeholder='insurance' name='pic')
-          .col-md-4.pr-md-1
-            .form-group
-              label Insurance
-              input.form-control(type='text' placeholder='insurance' name='insurance')
-          .col-md-4.pl-md-1
-            .form-group
-              label Valuation
-              input.form-control(type='text' placeholder='value' name='valuation')
-        .row
-          .col-md-8
-            .form-group
-              label About The Asset
-              textarea.form-control(rows='4' cols='80' placeholder='Here can be your description' value='Mike') Lamborghini Mercy, Your chick she so thirsty, I&apos;m in that two seat Lambo.
-        .row 
-          .col-md-12 
-            button.form-control.btn.btn-fill.btn-primary(type='submit')
-              | Create
+        form(method='post', action='/assets/store')
+          .row
+            .col-md-4.pr-md-1
+              .form-group
+                label Name
+                input.form-control(type='text' placeholder='Company' name="name")
+            .col-md-4.px-md-1
+              .form-group
+                label Tag
+                input.form-control(type='text' placeholder='Tag' name='tag' )
+            .col-md-4.pl-md-1
+              .form-group
+                label(for='') Price
+                input.form-control(type='text' placeholder='Cost' name='price')
+          .row
+            .col-md-4.pr-md-1
+              .form-group
+                label Insurance
+                input.form-control(type='text' placeholder='insurance' name='insurance')
+            .col-md-4.pl-md-1
+              .form-group
+                label Valuation
+                input.form-control(type='text' placeholder='value' name='valuation')
+            .col-md-4.pr-md-1
+              .form-group
+                label Pic
+                input.form-control(type='file' name='pic')
+          .row 
+            .col-md-6
+              .form-group
+                label TPS
+                select.form-control(name='tps')
+                  option(value)
+                    | --select tps-- 
+                  each d in tps
+                    option(value=d.id)
+                      =d.name
+            .col-md-6
+              .form-group
+                label Type
+                select.form-control(name='type')
+                  option(value)
+                    | --select type-- 
+                  each d in types 
+                    option(value=d.id)
+                      =d.name
+          .row 
+            .col-md-12 
+              button.form-control.btn.btn-fill.btn-primary(type='submit')
+                | Create
