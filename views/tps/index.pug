@@ -7,7 +7,8 @@ block content
       .card-header
         h4.card-title  All TPS
         a.text-right.btn.btn-fill.btn-primary(href='/tps/create')
-          | Create TPS
+          i.tim-icons.icon-simple-add
+          |  Create TPS
       .card-body
           .table-responsive-
           table.table.tablesorter(id='')
@@ -16,23 +17,31 @@ block content
                 th
                   | Name
                 th
-                  | Country
+                  | Location
                 th
-                  | City
-                th.text-center
-                  | Salary
+                  | Address
+                th
+                  | Phone
                 th.text-center
                   | Actions
             tbody
-              tr
-                td
-                  | Dakota Rice
-                td
-                  | Niger
-                td
-                  | Oud-Turnhout
-                td.text-center
-                  | $36,738
-                td
-                  
+              each d in tps
+                tr 
+                  td
+                    =d.name
+                  td
+                    =d.location
+                  td
+                    =d.address
+                  td
+                    =d.phone
+                  td.text-center
+                    a.p-1(href='/tps/'+d.id title='View TPS')
+                      i.fas.fa-eye
+                    a.p-1(href='/tps/edit/'+d.id title='Edit TPS')
+                      i.fas.fa-edit
+                    a.p-1(href='#' title='Delete TPS')
+                      i.fas.fa-trash
+                    
+                    
               

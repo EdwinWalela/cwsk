@@ -1,4 +1,5 @@
 const Router = require('express').Router();
+const dateFormat = require('dateformat');
 const upload = require('../../config/fileStorage');
 const Tps = require('../../models/tps');
 
@@ -16,14 +17,6 @@ Router.get('/',(req,res)=>{
 Router.get('/create',(req, res) => {
   res.render('tps/create',{});
 });
-
-Router.get('/edit/:id',(req, res) => {
-  let tps = Tps.findByPk(req.params.id);
-  Promise.all([tps]).then(values=>{
-        res.render('tps/edit',{data: data[0]});
-  });
-});
-
 
 //@ROUTE: create tps
 Router.post('/store',(req,res)=>{
@@ -45,7 +38,14 @@ Router.post('/store',(req,res)=>{
         console.log(err)
         //res.redirect('/');
     })
-})
+});
+
+Router.get('/edit/:id',(req, res) => {
+  let tps = Tps.findByPk(req.params.id);
+  Promise.all([tps]).then(values =>{
+        res.render('tps/update',{data: values[0]});
+  });
+});
 
 //@ROUTE: update tps
 Router.post('/update/:id',(req,res)=>{
@@ -58,11 +58,16 @@ Router.post('/update/:id',(req,res)=>{
         address:tps.address,
         phone:tps.phone,
         type:tps.type,
-        status:tps.status
+        status:tps.status,
+        description: tps.description
+    },{
+      where: {
+        id: req.params.id
+      }
     });
 
     Promise.all([updateTps]).then(values=>{
-        // res.render('/dashboard');
+        res.redirect('/tps');
     }).catch(err=>{
         console.log(err)
         // res.render('/dashboard');
@@ -73,9 +78,9 @@ Router.post('/update/:id',(req,res)=>{
 Router.get('/:id',(req,res)=>{
     let tps = Tps.findByPk(req.params.id);
     Promise.all([tps]).then(values=>{
-        // res.render('/tps',
-        //     {tps:values[0]}
-        // )
+         res.render('tps/view',
+             {tps:values[0]}
+         )
     });
 });
 
