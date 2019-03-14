@@ -1,0 +1,47 @@
+extend ../layout
+
+block content
+  .row 
+    .col-md-12 
+    .card
+      .card-header
+        h4.card-title  New TPS
+        
+      .card-body
+        form(method='post',action='/tps/store')
+          .row
+            .col-md-6.pr-md-1
+              .form-group
+                label Name
+                input.form-control(type='text' placeholder='name' name='name')
+            .col-md-6.pl-md-1
+              .form-group
+                label Alias
+                input.form-control(type='text' placeholder='value' name='alias')
+            .col-md-6.pr-md-1
+              .form-group
+                label Location
+                input.form-control(type='text' placeholder='Tag' name='location' )
+            .col-md-4.pl-md-1
+              .form-group
+                label(for='') Address
+                input.form-control(type='text' placeholder='Address' name='address')
+          .row
+            .col-md-3.pr-md-1
+              .form-group
+                label Phone
+                input.form-control(type='text' placeholder='Phone' name='phone')
+            .col-md-3.pl-md-1
+              .form-group
+                label Status
+                input.form-control(type='text' placeholder='value' name='status')
+            
+          .row
+            .col-md-12
+              .form-group
+                label About The Asset
+                textarea.form-control(rows='4' cols='80' placeholder='Here can be your description' value='Mike' name='description') 
+          .row 
+            .col-md-12 
+              button.form-control.btn.btn-fill.btn-primary(type='submit')
+                | Create

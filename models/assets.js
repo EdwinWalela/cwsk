@@ -5,15 +5,12 @@ const Type = require('./type');
 const sequelize = require('../config/dbconfig');
 
 const Asset = sequelize.define('assets',{
-    id:{
-        type:Sequelize.INTEGER,
-        primaryKey:true
-    },
     name:Sequelize.STRING,
     pic:Sequelize.STRING,
     tag:Sequelize.STRING,
+    cost: Sequelize.STRING,
     valuation:Sequelize.STRING,
-    insuarance:Sequelize.STRING
+    insurance:Sequelize.STRING
 },{
     timestamps: true, // timestamps will now be true
     getterMethods:{

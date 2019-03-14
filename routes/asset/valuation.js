@@ -1,5 +1,5 @@
 const Router = require('express').Router();
-const Valuation = require('../models/assetValuation');
+const Valuation = require('../../models/assetValuation');
 
 //@ROUTE: create asset valuation (req.params.id === assetId)
 Router.post('/:id/valuation',(req,res)=>{

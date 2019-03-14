@@ -1,0 +1,38 @@
+extend ../layout
+
+block content
+  .row 
+    .col-md-12 
+    .card
+      .card-header
+        h4.card-title  All Assets
+        a.text-right.btn.btn-fill.btn-primary(href='/assets/create')
+          | Create Asset
+      .card-body
+          .table-responsive-
+          table.table.tablesorter(id='')
+            thead.text-primary
+              tr
+                th
+                  | Name
+                th
+                  | Country
+                th
+                  | City
+                th.text-center
+                  | Salary
+                th.text-center
+                  | Actions
+            tbody
+              tr
+                td
+                  | Dakota Rice
+                td
+                  | Niger
+                td
+                  | Oud-Turnhout
+                td.text-center
+                  | $36,738
+                td
+                  
+              

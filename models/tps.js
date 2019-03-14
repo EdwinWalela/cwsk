@@ -11,7 +11,8 @@ const Tps = sequelize.define('tps',{
     address: Sequelize.STRING,
     phone: Sequelize.STRING,
     type: Sequelize.STRING,
-    status: Sequelize.BOOLEAN
+    status: Sequelize.BOOLEAN,
+    description: Sequelize.TEXT
   },{
     timestamps: true, // timestamps will now be true
     getterMethods:{

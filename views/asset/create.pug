@@ -1,0 +1,42 @@
+extend ../layout
+
+block content
+  .row 
+    .col-md-12 
+    .card
+      .card-header
+        h4.card-title  New Asset
+        
+      .card-body
+        form
+        .row
+          .col-md-3.pr-md-1
+            .form-group
+              label Name
+              input.form-control(type='text' placeholder='Company')
+          .col-md-3.px-md-1
+            .form-group
+              label Tag
+              input.form-control(type='text' placeholder='Tag' )
+          .col-md-4.pl-md-1
+            .form-group
+              label(for='') Cost
+              input.form-control(type='text' placeholder='Cost')
+        .row
+          .col-md-6.pr-md-1
+            .form-group
+              label Insurance
+              input.form-control(type='text' placeholder='insurance')
+          .col-md-6.pl-md-1
+            .form-group
+              label Valuation
+              input.form-control(type='text' placeholder='value')
+        .row
+          .col-md-8
+            .form-group
+              label About The Asset
+              textarea.form-control(rows='4' cols='80' placeholder='Here can be your description' value='Mike') Lamborghini Mercy, Your chick she so thirsty, I&apos;m in that two seat Lambo.
+        .row 
+          .col-md-12 
+            button.form-control.btn.btn-fill.btn-primary(type='submit')
+              | Create

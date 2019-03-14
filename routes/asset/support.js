@@ -1,5 +1,5 @@
 const Router = require('express').Router();
-const Support = require('../models/support');
+const Support = require('../../models/support');
 
 //@ROUTE: create asset support (req.params.id === assetID)
 Router.post('/:id/support',(req,res)=>{

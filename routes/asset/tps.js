@@ -1,30 +1,32 @@
 const Router = require('express').Router();
-const upload = require('../config/fileStorage');
-const Tps = require('../models/tps');
+const upload = require('../../config/fileStorage');
+const Tps = require('../../models/tps');
 
-//@ROUTE: view tps
-Router.get('/:id',(req,res)=>{
-    let tps = Tps.findByPk(req.params.id);
-    Promise.all([tps]).then(values=>{
-        // res.render('/tps',
-        //     {tps:values[0]}
-        // )
-    });
-})
 
-Router.get('/all',(req,res)=>{
+Router.get('/',(req,res)=>{
     let allTps = Tps.findAll();
-    
+
     Promise.all([allTps]).then(values=>{
-        // res.render('/search',
-        //     {tps:values[0]}
-        // );
+        res.render('tps/index',
+            {tps:values[0]}
+        );
     })
-})
+});
+
+Router.get('/create',(req, res) => {
+  res.render('tps/create',{});
+});
+
+Router.get('/edit/:id',(req, res) => {
+  let tps = Tps.findByPk(req.params.id);
+  Promise.all([tps]).then(values=>{
+        res.render('tps/edit',{data: data[0]});
+  });
+});
 
 
 //@ROUTE: create tps
-Router.post('/',(req,res)=>{
+Router.post('/store',(req,res)=>{
     let tps = req.body
     let newTps = Tps.create({
         name:tps.name,
@@ -33,11 +35,12 @@ Router.post('/',(req,res)=>{
         address:tps.address,
         phone:tps.phone,
         type:tps.type,
-        status:true,
+        status:tps.status,
+        description: tps.description
     });
 
     Promise.all([newTps]).then(values=>{
-        //res.redirect('/dashboard');
+        res.redirect('/tps');
     }).catch(err=>{
         console.log(err)
         //res.redirect('/');
@@ -45,7 +48,7 @@ Router.post('/',(req,res)=>{
 })
 
 //@ROUTE: update tps
-Router.post('/:id',(req,res)=>{
+Router.post('/update/:id',(req,res)=>{
     let tps = req.body;
 
     let updateTps = Tps.update({
@@ -64,7 +67,16 @@ Router.post('/:id',(req,res)=>{
         console.log(err)
         // res.render('/dashboard');
     });
-})
+});
 
+//@ROUTE: view tps
+Router.get('/:id',(req,res)=>{
+    let tps = Tps.findByPk(req.params.id);
+    Promise.all([tps]).then(values=>{
+        // res.render('/tps',
+        //     {tps:values[0]}
+        // )
+    });
+});
 
-module.exports = Router;    
+module.exports = Router;
