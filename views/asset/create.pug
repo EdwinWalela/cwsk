@@ -17,20 +17,24 @@ block content
           .col-md-3.px-md-1
             .form-group
               label Tag
-              input.form-control(type='text' placeholder='Tag' )
+              input.form-control(type='text' placeholder='Tag' name='tag' )
           .col-md-4.pl-md-1
             .form-group
-              label(for='') Cost
-              input.form-control(type='text' placeholder='Cost')
+              label(for='') Price
+              input.form-control(type='text' placeholder='Cost' name='price')
         .row
-          .col-md-6.pr-md-1
+          .col-md-4.pr-md-1
+            .form-group
+              label Pic
+              input.form-control(type='file' placeholder='insurance' name='pic')
+          .col-md-4.pr-md-1
             .form-group
               label Insurance
-              input.form-control(type='text' placeholder='insurance')
-          .col-md-6.pl-md-1
+              input.form-control(type='text' placeholder='insurance' name='insurance')
+          .col-md-4.pl-md-1
             .form-group
               label Valuation
-              input.form-control(type='text' placeholder='value')
+              input.form-control(type='text' placeholder='value' name='valuation')
         .row
           .col-md-8
             .form-group

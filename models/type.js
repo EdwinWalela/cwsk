@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require('../config/dbconfig');
+const dateFormat = require('dateformat');
 
 const Type = sequelize.define('type',{
     name:{

@@ -3,6 +3,7 @@ const Sequelize = require("sequelize");
 const Tps = require('./tps');
 const Type = require('./type');
 const sequelize = require('../config/dbconfig');
+const dateFormat = require('dateformat');
 
 const Asset = sequelize.define('assets',{
     name:Sequelize.STRING,

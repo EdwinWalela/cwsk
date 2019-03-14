@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+    .row
+      .card      
+        .card-body
+          form(method="post",action="/type/update/"+data.id)
+            h6.heading-small.text-muted.mb-4 Route information
+              .row
+                .col-lg-12
+                  .form-group
+                    label.form-control-label(for='input-username') name
+                    input#name.form-control.form-control-alternative(type='text' placeholder='Fixed' name='name' required value=data.name)
+              .row
+                .text-center
+                  button.btn.btn-primary.my-4(type='submit') Update

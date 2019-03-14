@@ -10,6 +10,7 @@ const usersRouter = require('./routes/users');
 //Assets Module
 const assetsRouter = require('./routes/asset/assets');
 const tpsRouter = require('./routes/asset/tps');
+const typeRouter = require('./routes/asset/type');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/assets', assetsRouter);
 app.use('/tps', tpsRouter);
+app.use('/type', typeRouter);
 
 
 // catch 404 and forward to error handler

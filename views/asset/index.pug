@@ -7,6 +7,7 @@ block content
       .card-header
         h4.card-title  All Assets
         a.text-right.btn.btn-fill.btn-primary(href='/assets/create')
+          i.tim-icons.icon-simple-add
           | Create Asset
       .card-body
           .table-responsive-
@@ -16,23 +17,29 @@ block content
                 th
                   | Name
                 th
-                  | Country
+                  | Tag
                 th
-                  | City
+                  | Valuation
                 th.text-center
-                  | Salary
+                  | Insurance
                 th.text-center
                   | Actions
             tbody
-              tr
-                td
-                  | Dakota Rice
-                td
-                  | Niger
-                td
-                  | Oud-Turnhout
-                td.text-center
-                  | $36,738
-                td
-                  
+              each d in assets
+                tr 
+                  td
+                    =d.name
+                  td
+                    =d.location
+                  td
+                    =d.address
+                  td
+                    =d.phone
+                  td.text-center
+                    a.p-1(href='/asset/'+d.id title='View Asset')
+                      i.fas.fa-eye
+                    a.p-1(href='/asset/edit/'+d.id title='Edit Asset')
+                      i.fas.fa-edit
+                    a.p-1(href='#' title='Delete Asset')
+                      i.fas.fa-trash
               
