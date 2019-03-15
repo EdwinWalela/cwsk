@@ -23,8 +23,6 @@ Router.get('/', (req,res)=>{
     })
 });
 
-
-
 Router.get('/create',(req, res) => {
   let tps = Tps.findAll({});
   let types = Type.findAll({});
@@ -53,7 +51,6 @@ Router.post('/store',/*upload.single('pic'),*/(req,res)=>{
         console.log(err);
     });
 })
-
 
 Router.get('/edit/:id',(req, res) => {
   let asset = Asset.findByPk(req.params.id,{include: [Tps,Type]});
