@@ -7,12 +7,12 @@ Router.get('/',(req,res)=>{
     let allInsuarance = Insuarance.findAll({});
 
     Promise.all([allInsuarance]).then(values=>{
-        res.render('/insurance/index',
+        res.render('insurance/index',
             {insurances:values[0]}
         );
     }).catch(err=>{
         console.log(err)
-        res.render('/insuarances',
+        res.render('insurance/index',
             {insuarances:null}
         );
     });
@@ -22,12 +22,12 @@ Router.get('/',(req,res)=>{
 Router.get('/create',(req,res)=>{
     let assets = Asset.findAll({});
     Promise.all([assets]).then(values=>{
-        res.render('/insuarance/create',
+        res.render('insurance/create',
             {assets:values[0]}
         );
     }).catch(err=>{
         console.log(err)
-        res.redirect('/insuarance/create');
+        res.redirect('insurance/create');
     });
 })
 
@@ -43,7 +43,7 @@ Router.post('/store',(req,res)=>{
     });
 
     Promise.all([newInsuarance]).then(values=>{
-        //res.redirect('')
+        res.redirect('/insurance')
     }).catch(err=>{
         console.log(err)
         //res.redirect('')
@@ -66,10 +66,11 @@ Router.get('/:id',(req,res)=>{
 Router.get('/edit/:id',(req,res)=>{
     let insuarance = Insuarance.findByPk(req.params.id);
     let assets = Asset.findAll({});
-    Promise.all([insuarance]).then(values=>{
-        res.render('/insurance/update',
+    Promise.all([insuarance,assets]).then(values=>{
+        console.log(values);
+        res.render('insurance/update',
             {
-                insuarance:values[0],
+                insurance:values[0],
                 assets:values[1]
             }
         );

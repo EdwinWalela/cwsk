@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 require('dotenv').config();
 // DB connection
-const sequelize = new Sequelize(process.env.DB_NAME,process.env.DB_USER,process.env.DB_PASS,{
+const sequelize = new Sequelize(process.env.DB_NAME,process.env.DB_USER,'',{
     host:process.env.DB_HOST,
     dialect:'mysql',
     operatorsAliases:false,
@@ -22,7 +22,7 @@ sequelize.authenticate()
     });
 
 sequelize.sync({
-  //force:true  //  IF YOU SET THIS TO FALSE, IT WONT RECREATE THE DATABASE
+  force:true  //  IF YOU SET THIS TO FALSE, IT WONT RECREATE THE DATABASE
 });
 
 module.exports = sequelize;

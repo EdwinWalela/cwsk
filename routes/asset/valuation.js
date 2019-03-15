@@ -1,8 +1,21 @@
 const Router = require('express').Router();
 const Valuation = require('../../models/assetValuation');
 
+Router.get('/',(req,res)=>{
+    let allValuations = Valuation.findAll();
+
+    Promise.all([allValuations]).then(values=>{
+        res.render('/valuation/index',
+            {valuations:values[0]}
+        );
+    }).catch(err=>{
+        console.log(err);
+        // res.render('/valutations',{valuation:null});
+    });
+})
+
 //@ROUTE: create asset valuation (req.params.id === assetId)
-Router.post('/:id/valuation',(req,res)=>{
+Router.post('/valuation',(req,res)=>{
     let valuation = req.body;
 
     let newValuation = Valuation.create({
@@ -16,19 +29,6 @@ Router.post('/:id/valuation',(req,res)=>{
     }).catch(err=>{
         console.log(err)
         //res.redirect('/dashboard');
-    });
-})
-
-Router.get('/all',(req,res)=>{
-    let allValuations = Valuation.findAll();
-
-    Promise.all([allValuations]).then(values=>{
-        // res.render('/valuations',
-        //     {valuations:values[0]}
-        // );
-    }).catch(err=>{
-        console.log(err);
-        // res.render('/valutations',{valuation:null});
     });
 })
 

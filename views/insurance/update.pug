@@ -8,16 +8,16 @@ block content
         h4.card-title  Edit Insuarance
         
       .card-body
-        form(method='post', action='/insurance/update/'+insuarance.id)
+        form(method='post', action='/insurance/update/'+insurance.id)
           .row
             .col-md-4.pr-md-1
               .form-group
                 label Name
-                input.form-control(type='text' placeholder='Name' name="name" value=insuarance.name)
+                input.form-control(type='text' placeholder='Name' name="name" value=insurance.name)
             .col-md-4.px-md-1
               .form-group
                 label Cost
-                input.form-control(type='text' placeholder='Cost' name='cost' value=insuarance.cost)
+                input.form-control(type='text' placeholder='Cost' name='cost' value=insurance.cost)
             .col-md-4.pl-md-1
               .form-group
                 label(for='') Details
