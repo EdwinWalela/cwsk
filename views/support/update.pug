@@ -5,23 +5,23 @@ block content
     .col-md-12 
     .card
       .card-header
-        h4.card-title  New Insuarance
+        h4.card-title  Edit Support
         
       .card-body
-        form(method='post', action='/insurance/store')
+        form(method='post', action='/support/update/'+support.id)
           .row
             .col-md-4.pr-md-1
               .form-group
                 label Name
-                input.form-control(type='text' placeholder='Name' name="name")
+                input.form-control(type='text' placeholder='Name' name="name" value=support.name)
             .col-md-4.px-md-1
               .form-group
                 label Cost
-                input.form-control(type='text' placeholder='Cost' name='cost' )
+                input.form-control(type='text' placeholder='Cost' name='cost' value=support.cost)
             .col-md-4.pl-md-1
               .form-group
                 label(for='') Details
-                input.form-control(type='text' placeholder='Details' name='details')
+                input.form-control(type='text' placeholder='Details' name='details' value=support.details)
           .row 
             .col-md-6
               .form-group

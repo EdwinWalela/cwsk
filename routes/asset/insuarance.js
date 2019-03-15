@@ -68,7 +68,10 @@ Router.get('/edit/:id',(req,res)=>{
     let assets = Asset.findAll({});
     Promise.all([insuarance]).then(values=>{
         res.render('/insurance/update',
-            {insuarance:values[0]}
+            {
+                insuarance:values[0],
+                assets:values[1]
+            }
         );
     }).catch(err=>{
         console.log(err)
