@@ -7,12 +7,12 @@ const Asset = require('../../models/assets');
 Router.get('/create',(req,res)=>{
     let assets = Asset.findAll({});
     Promise.all([assets]).then(values=>{
-        // res.render('/insuarance/create',
-        //     {assets:values[0]}
-        // );
+        res.render('/insuarance/create',
+            {assets:values[0]}
+        );
     }).catch(err=>{
         console.log(err)
-        //res.redirect('/create');
+        res.redirect('/insuarance/create');
     });
 })
 

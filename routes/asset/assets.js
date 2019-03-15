@@ -8,10 +8,8 @@ const Support = require('../../models/support');
 const Tps = require('../../models/tps');
 const Type = require('../../models/type');
 
-//@NOTE: req.params.id === assetID on all routes
 
 //@ROUTE: view asset
-
 Router.get('/', (req,res)=>{
     let assets = Asset.findAll({include: [Tps,Type]});
 
