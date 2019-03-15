@@ -3,6 +3,21 @@ const Insuarance = require('../../models/insurance');
 const Asset = require('../../models/assets');
 
 
+Router.get('/',(req,res)=>{
+    let allInsuarance = Insuarance.findAll({});
+
+    Promise.all([allInsuarance]).then(values=>{
+        res.render('/insurance/index',
+            {insurances:values[0]}
+        );
+    }).catch(err=>{
+        console.log(err)
+        res.render('/insuarances',
+            {insuarances:null}
+        );
+    });
+});
+
 //@ROUTE: render create forms
 Router.get('/create',(req,res)=>{
     let assets = Asset.findAll({});
@@ -48,31 +63,16 @@ Router.get('/:id',(req,res)=>{
     })
 })
 
-Router.get('/all',(req,res)=>{
-    let allInsuarance = Insuarance.findAll({});
-
-    Promise.all([allInsuarance]).then(values=>{
-        // res.render('/insuarances',
-        //     {insuarances:values[0]}
-        // );
-    }).catch(err=>{
-        console.log(err)
-        // res.render('/insuarances',
-        //     {insuarances:null}
-        // );
-    })
-})
-
 Router.get('/edit/:id',(req,res)=>{
     let insuarance = Insuarance.findByPk(req.params.id);
     let assets = Asset.findAll({});
     Promise.all([insuarance]).then(values=>{
-        // res.render('/insurance/edit',
-        //     {insuarance:values[0]}
-        // );
+        res.render('/insurance/update',
+            {insuarance:values[0]}
+        );
     }).catch(err=>{
         console.log(err)
-        //res.redirect('/insurance/edit');
+        res.redirect('/insurance/edit'+req.params.id);
     });
 });
 

@@ -11,6 +11,7 @@ const usersRouter = require('./routes/users');
 const assetsRouter = require('./routes/asset/assets');
 const tpsRouter = require('./routes/asset/tps');
 const typeRouter = require('./routes/asset/type');
+const insuranceRouter = require('./routes/asset/insuarance');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use('/users', usersRouter);
 app.use('/assets', assetsRouter);
 app.use('/tps', tpsRouter);
 app.use('/type', typeRouter);
+app.user('/insurance',insuranceRouter);
 
 
 // catch 404 and forward to error handler
