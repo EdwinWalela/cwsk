@@ -88,7 +88,11 @@ Router.post('/update/:id',(req,res)=>{
         cost:insuarance.cost,
         details:insuarance.details,
         assetId:insuarance.asset
-    });
+    },{
+        where: {
+          id: req.params.id
+        }
+      });
 
     Promise.all([newInsuarance]).then(values=>{
         res.redirect('/insurance/'+req.params.id)
