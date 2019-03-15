@@ -95,7 +95,7 @@ Router.post('/update/:id',(req,res)=>{
       });
 
     Promise.all([newInsuarance]).then(values=>{
-        res.redirect('/insurance/'+req.params.id)
+        res.redirect('/insurance')
     }).catch(err=>{
         console.log(err)
         res.redirect('/insurance/'+req.params.id)
