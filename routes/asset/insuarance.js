@@ -64,10 +64,11 @@ Router.get('/all',(req,res)=>{
 })
 
 Router.get('/edit/:id',(req,res)=>{
+    let insuarance = Insuarance.findByPk(req.params.id);
     let assets = Asset.findAll({});
-    Promise.all([assets]).then(values=>{
+    Promise.all([insuarance]).then(values=>{
         // res.render('/insurance/edit',
-        //     {assets:values[0]}
+        //     {insuarance:values[0]}
         // );
     }).catch(err=>{
         console.log(err)
@@ -86,10 +87,10 @@ Router.post('/update/:id',(req,res)=>{
     });
 
     Promise.all([newInsuarance]).then(values=>{
-        //res.redirect('')
+        res.redirect('/insurance/'+req.params.id)
     }).catch(err=>{
         console.log(err)
-        //res.redirect('')
+        res.redirect('/insurance/'+req.params.id)
     });
 });
 
