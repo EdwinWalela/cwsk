@@ -1,5 +1,4 @@
 const Sequelize = require("sequelize");
-
 const sequelize = require('../config/dbconfig');
 
 const Asset = require('./assets');
