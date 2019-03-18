@@ -36,7 +36,7 @@ Router.get('/create',(req, res) => {
 //@ROUTE: create disposal
 Router.post('/store',/*upload.single('pic'),*/(req,res)=>{
     let disposal = req.body;
-    let newDisposal = Asset.create({
+    let newDisposal = Disposal.create({
         purpose:disposal.name,
         pic:null,
         //pic:asset.pic, ---- TODO(file storage)
