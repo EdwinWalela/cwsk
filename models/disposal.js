@@ -1,13 +1,9 @@
 const Sequelize = require("sequelize");
-
+const dateFormat = require('dateformat');
 const Asset = require('./assets');
 const sequelize = require('../config/dbconfig');
 
 const Disposal = sequelize.define('disposal',{
-    id:{
-        type:Sequelize.INTEGER,
-        primaryKey:true
-    },
     purpose:Sequelize.STRING,
     details:{
         type:Sequelize.TEXT
