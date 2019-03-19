@@ -35,10 +35,10 @@ Router.post('/',(req,res)=>{
 Router.get('/:id',(req,res)=>{
     let tps = Tps.findByPk(req.params.id);
     Promise.all([tps]).then(values=>{
-         res.render('tps/view',
-             {tps:values[0]}
-         )
-    });
+         res.send({tps:values[0]})
+    }).catch(err=>{
+        res.status(500).send({err})
+    })
 });
 
 Router.put('/:id',(req,res)=>{
@@ -70,15 +70,6 @@ Router.delete('/:id',(req,res)=>{
     let tps = req.body;
 
     let updateTps = Tps.destroy({
-        name:tps.name,
-        alias:tps.alias,
-        location:tps.location,
-        address:tps.address,
-        phone:tps.phone,
-        type:tps.type,
-        status:tps.status,
-        description: tps.description
-    },{
       where: {
         id: req.params.id
       }
