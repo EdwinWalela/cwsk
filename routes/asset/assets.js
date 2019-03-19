@@ -22,6 +22,7 @@ Router.post('/',/*upload.single('pic'),*/(req,res)=>{
         pic:null,
         //pic:asset.pic, ---- TODO(file storage)
         tag:asset.tag,
+        cost:asset.cost,
         valuation:asset.valuation,
         insurance:asset.insurance,
         typeId:asset.type,
@@ -50,9 +51,12 @@ Router.put('/:id',(req,res)=>{
     let updateAsset = Asset.update({
         name:asset.name,
         pic:asset.pic,
+        cost:asset.cost,
         tag:asset.tag,
         valuation:asset.valuation,
-        insurance:asset.insurance
+        insurance:asset.insurance,
+        typeId:asset.type,
+        tpsId:asset.tps,
     },{
       where: {
         id: req.params.id
@@ -67,15 +71,8 @@ Router.put('/:id',(req,res)=>{
 });
 
 Router.delete('/:id',(req,res)=>{
-    let asset = req.body;
 
     let updateAsset = Asset.destroy({
-        name:asset.name,
-        pic:asset.pic,
-        tag:asset.tag,
-        valuation:asset.valuation,
-        insurance:asset.insurance
-    },{
       where: {
         id: req.params.id
       }

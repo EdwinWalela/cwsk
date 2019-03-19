@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/assets', assetsRouter);
+app.use('/asset', assetsRouter);
 app.use('/tps', tpsRouter);
 app.use('/type', typeRouter);
 app.use('/insurance',insuranceRouter);
