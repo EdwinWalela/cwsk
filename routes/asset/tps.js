@@ -1,6 +1,4 @@
 const Router = require('express').Router();
-const dateFormat = require('dateformat');
-const upload = require('../../config/fileStorage');
 const Tps = require('../../models/tps');
 
 
@@ -8,18 +6,13 @@ Router.get('/',(req,res)=>{
     let allTps = Tps.findAll();
 
     Promise.all([allTps]).then(values=>{
-        res.render('tps/index',
-            {tps:values[0]}
-        );
+        res.send({tps:values[0]});
+    }).catch(err=>{
+        res.status(500).send({err})
     })
 });
 
-Router.get('/create',(req, res) => {
-  res.render('tps/create',{});
-});
-
-//@ROUTE: create tps
-Router.post('/store',(req,res)=>{
+Router.post('/',(req,res)=>{
     let tps = req.body
     let newTps = Tps.create({
         name:tps.name,
@@ -33,22 +26,22 @@ Router.post('/store',(req,res)=>{
     });
 
     Promise.all([newTps]).then(values=>{
-        res.redirect('/tps');
+        res.status(201).send({msg:"OK"})
     }).catch(err=>{
-        console.log(err)
-        //res.redirect('/');
+        res.status(500).send({err})
     })
 });
 
-Router.get('/edit/:id',(req, res) => {
-  let tps = Tps.findByPk(req.params.id);
-  Promise.all([tps]).then(values =>{
-        res.render('tps/update',{data: values[0]});
-  });
+Router.get('/:id',(req,res)=>{
+    let tps = Tps.findByPk(req.params.id);
+    Promise.all([tps]).then(values=>{
+         res.render('tps/view',
+             {tps:values[0]}
+         )
+    });
 });
 
-//@ROUTE: update tps
-Router.post('/update/:id',(req,res)=>{
+Router.put('/:id',(req,res)=>{
     let tps = req.body;
 
     let updateTps = Tps.update({
@@ -67,20 +60,34 @@ Router.post('/update/:id',(req,res)=>{
     });
 
     Promise.all([updateTps]).then(values=>{
-        res.redirect('/tps');
+        res.send({msg:"OK"})
     }).catch(err=>{
-        console.log(err)
-        // res.render('/dashboard');
+        res.status(500).send({err})
     });
 });
 
-//@ROUTE: view tps
-Router.get('/:id',(req,res)=>{
-    let tps = Tps.findByPk(req.params.id);
-    Promise.all([tps]).then(values=>{
-         res.render('tps/view',
-             {tps:values[0]}
-         )
+Router.delete('/:id',(req,res)=>{
+    let tps = req.body;
+
+    let updateTps = Tps.destroy({
+        name:tps.name,
+        alias:tps.alias,
+        location:tps.location,
+        address:tps.address,
+        phone:tps.phone,
+        type:tps.type,
+        status:tps.status,
+        description: tps.description
+    },{
+      where: {
+        id: req.params.id
+      }
+    });
+
+    Promise.all([updateTps]).then(values=>{
+        res.send({msg:"OK"})
+    }).catch(err=>{
+        res.status(500).send({err})
     });
 });
 
