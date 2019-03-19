@@ -86,7 +86,7 @@ Router.post('/update/:id',(req,res)=>{
 })
 
 Router.get('/:id',(req,res)=>{
-    let support = Support.findByPk(req.params.id);
+    let support = Support.findByPk(req.params.id,{include:[Asset]});
 
     Promise.all([support]).then(values=>{
         res.render('support',

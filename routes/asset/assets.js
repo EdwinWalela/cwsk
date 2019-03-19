@@ -89,11 +89,32 @@ Router.post('/update/:id',(req,res)=>{
 //@ROUTE: view asset
 Router.get('/:id',(req,res)=>{
     let asset = Asset.findByPk(req.params.id, {include: [Tps,Type]});
+    let valuations = Valuation.findAll({
+      where: {
+        assetId: req.params.id
+      }
+    });
 
-    Promise.all([asset]).then(values=>{
-        //res.render('/asset',
-        //     {asset:values[0]}
-        // )
+    let insurance = Insurance.findAll({
+      where: {
+        assetId: req.params.id
+      }
+    });
+
+    let support = Support.findAll({
+      where: {
+        assetId: req.params.id
+      }
+    });
+
+    Promise.all([asset, valuations, insurance,support]).then(values=>{
+        res.render('asset/view',{
+          asset:values[0],
+          valuations: values[1],
+          insurance: values[2],
+          support: values[3]
+        }
+      )
     }).catch(err=>{
         console.log(err);
         //res.render('/',{asset:null});

@@ -1,0 +1,28 @@
+extend ../layout
+
+block content
+  .row 
+    .col-md-12 
+    .card.card-user
+      .card-header
+        h4.card-title  View Asset
+        a.text-right.btn.btn-fill.btn-primary(href='/asset/create')
+          i.fas.fa-eye.p-1 
+          =tps.name
+      .card-body
+        .author
+          p.description
+            h3.title
+              | Name: 
+              =asset.name
+          p.description
+            | Tag: 
+            =asset.tag
+          p.description
+            | Cost: 
+            =asset.cost
+          p.description
+            | createdAt: 
+            =asset.createdAt
+        .card-description
+          =tps.description
