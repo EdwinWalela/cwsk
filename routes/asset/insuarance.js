@@ -4,7 +4,7 @@ const Asset = require('../../models/assets');
 
 //@ROUTE: get all insurances
 Router.get('/',(req,res)=>{
-    let allInsurance = Insurance.findAll({});
+    let allInsurance = Insurance.findAll({include:[Asset]});
 
     Promise.all([allInsurance]).then(values=>{
         res.send({insurances:values[0]});
