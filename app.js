@@ -29,9 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/asset', assetsRouter);
+app.use('/assets', assetsRouter);
 app.use('/tps', tpsRouter);
-app.use('/type', typeRouter);
+app.use('/types', typeRouter);
 app.use('/insurance',insuranceRouter);
 app.use('/support',supportRouter);
 app.use('/disposal',disposalRouter)
