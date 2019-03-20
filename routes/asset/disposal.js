@@ -3,42 +3,24 @@ const upload = require('../../config/fileStorage');
 
 const Asset = require("../../models/assets");
 const Disposal = require("../../models/disposal");
-const Tps = require('../../models/tps');
-const Type = require('../../models/type');
 
 
-//@ROUTE: view disposals
+//@ROUTE: get all disposals
 Router.get('/', (req,res)=>{
     let disposal = Disposal.findAll({include: [Asset]});
     
     Promise.all([disposal]).then(values=>{
-        res.render('disposal/index',{disposals:values[0]})
+        res.send({disposals:values[0]})
     }).catch(err => {
-        console.log(err);
-        res.render('disposal/index',{disposals:[]})
-    })
+        res.status(500).send({disposals:[]})
+    });
 });
-
-Router.get('/create',(req, res) => {
-  let assets = Asset.findAll({});
-
-  Promise.all([assets]).then(values=>{
-      res.render('disposal/create',{
-          assets:values[0]
-        }
-    );
-  }).catch(err=>{
-      console.log(err);
-      res.redirect('/');
-  })
-});
-
 //@ROUTE: create disposal
-Router.post('/store',/*upload.single('pic'),*/(req,res)=>{
+Router.post('/',/*upload.single('pic'),*/(req,res)=>{
     let disposal = req.body;
     let newDisposal = Disposal.create({
         purpose:disposal.name,
-        pic:null,
+        pic:"",
         //pic:asset.pic, ---- TODO(file storage)
         details:disposal.details,
         price:disposal.price,
@@ -46,29 +28,28 @@ Router.post('/store',/*upload.single('pic'),*/(req,res)=>{
     });
     
     Promise.all([newDisposal]).then(values => {
-        res.redirect('/disposal');
+        res.status(201).send({msg:"OK"})
     }).catch(err=>{
-        console.log(err);
+        res.status(500).send({})
     });
-})
-
-Router.get('/edit/:id',(req, res) => {
-  let disposal = Disposal.findByPk(req.params.id);
+});
+//@ROUTE: get disposal by PK
+Router.get('/:id',(req, res) => {
+  let disposal = Disposal.findByPk(req.params.id,{include:[Asset]});
+ 
   Promise.all([disposal]).then(values=>{
-      res.render('disposal/update',{disposals:values[0]});
+      res.send({disposal:values[0]});
   }).catch(err=>{
-      console.log(err);
-      res.redirect('/disposal')
+      res.status(500).send({});
   });
 });
-
-//@ROUTE: update disposal
-Router.post('/update/:id',(req,res)=>{
+//@ROUTE: update disposal by PK
+Router.put('/:id',(req,res)=>{
     let disposal = req.body;
 
-    let updateAsset = Asset.update({
+    let updateDisposal = Disposal.update({
         purpose:disposal.name,
-        pic:null,
+        pic:disposal.pic,
         //pic:asset.pic, ---- TODO(file storage)
         details:disposal.details,
         price:disposal.price,
@@ -80,11 +61,24 @@ Router.post('/update/:id',(req,res)=>{
       }
     });
 
-    Promise.all([updateAsset]).then(values=>{
-        res.redirect('/disposal');
+    Promise.all([updateDisposal]).then(values=>{
+        res.status(200).send({msg:"OK"});
     }).catch(err=>{
-        console.log(err);
-        res.redirect('/disposal')
+        res.status(500).send({})
+    });
+});
+//@ROUTE: delete disposal by PK
+Router.delete('/:id',(req,res)=>{
+    let deleteDisposal = Disposal.destroy({
+      where: {
+        id: req.params.id
+      }
+    });
+
+    Promise.all([deleteDisposal]).then(values=>{
+        res.status(200).send({msg:"OK"});
+    }).catch(err=>{
+        res.status(500).send({})
     });
 });
 
