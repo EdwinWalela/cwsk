@@ -32,9 +32,9 @@ app.use('/users', usersRouter);
 app.use('/assets', assetsRouter);
 app.use('/tps', tpsRouter);
 app.use('/types', typeRouter);
-app.use('/insurance',insuranceRouter);
+app.use('/insurances',insuranceRouter);
 app.use('/support',supportRouter);
-app.use('/disposal',disposalRouter)
+app.use('/disposals',disposalRouter)
 
 
 // catch 404 and forward to error handler
