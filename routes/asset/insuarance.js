@@ -2,37 +2,19 @@ const Router = require('express').Router();
 const Insurance = require('../../models/insurance');
 const Asset = require('../../models/assets');
 
-
+//@ROUTE: get all insurances
 Router.get('/',(req,res)=>{
     let allInsurance = Insurance.findAll({});
 
     Promise.all([allInsurance]).then(values=>{
-        res.render('insurance/index',
-            {insurances:values[0]}
-        );
+        res.send({insurances:values[0]});
     }).catch(err=>{
-        console.log(err)
-        res.render('insurance/index',
-            {insurances:null}
-        );
+        res.status(500).send({insurances:[]});
     });
 });
 
-//@ROUTE: render create forms
-Router.get('/create',(req,res)=>{
-    let assets = Asset.findAll({});
-    Promise.all([assets]).then(values=>{
-        res.render('insurance/create',
-            {assets:values[0]}
-        );
-    }).catch(err=>{
-        console.log(err)
-        res.redirect('insurance/create');
-    });
-})
-
-//@ROUTE: create asset insuarance
-Router.post('/store',(req,res)=>{
+//@ROUTE: create asset insurance
+Router.post('/',(req,res)=>{
     let insurance = req.body;
 
     let newInsurance = Insurance.create({
@@ -43,31 +25,22 @@ Router.post('/store',(req,res)=>{
     });
 
     Promise.all([newInsurance]).then(values=>{
-        res.redirect('/insurance')
+        res.status(201).send({msg:"OK"})
     }).catch(err=>{
-        console.log(err)
-        //res.redirect('')
+       res.status(500).send({msg:"err"})
     });
 });
 
-Router.get('/edit/:id',(req,res)=>{
+Router.get('/:id',(req,res)=>{
     let insurance = Insurance.findByPk(req.params.id,{include:[Asset]});
-    let assets = Asset.findAll({});
-    Promise.all([insurance,assets]).then(values=>{
-        console.log(values);
-        res.render('insurance/update',
-            {
-                insurance:values[0],
-                assets:values[1]
-            }
-        );
+    Promise.all([insurance]).then(values=>{
+        res.send({insurance:values[0]});
     }).catch(err=>{
-        console.log(err)
-        res.redirect('/insurance/edit'+req.params.id);
+        res.status(500).send({});
     });
 });
 
-Router.post('/update/:id',(req,res)=>{
+Router.put('/:id',(req,res)=>{
     let insurance = req.body;
 
     let newInsurance = Insurance.update({
@@ -79,27 +52,30 @@ Router.post('/update/:id',(req,res)=>{
         where: {
           id: req.params.id
         }
-      });
+    });
 
     Promise.all([newInsurance]).then(values=>{
-        res.redirect('/insurance')
+        res.send({msg:"OK"})
     }).catch(err=>{
-        console.log(err)
-        res.redirect('/insurance/'+req.params.id)
+        res.status(500).send({})
     });
 });
 
-//@NOTE: req.params.id === insuarance PK
-Router.get('/:id',(req,res)=>{
-    let insurance = Insurance.findByPk(req.params.id,{include:[Asset]});
-    Promise.all([insurance]).then(values=>{
-        // res.render('/insuarance',
-        //     {insuarance:values[0]}
-        // );
+Router.delete('/:id',(req,res)=>{
+    let insurance = req.body;
+
+    let newInsurance = Insurance.destroy({
+        where: {
+          id: req.params.id
+        }
+    });
+
+    Promise.all([newInsurance]).then(values=>{
+        res.status(204).send({})
     }).catch(err=>{
-        console.log(err);
-        // res.render('/insuarance',{});
-    })
+        res.status(500).send({})
+    });
 });
+
 
 module.exports = Router;
