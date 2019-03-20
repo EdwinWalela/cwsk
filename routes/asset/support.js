@@ -2,35 +2,8 @@ const Router = require('express').Router();
 const Support = require('../../models/support');
 const Asset = require('../../models/assets');
 
-Router.get('/',(req,res)=>{
-    let allSupport = Support.findAll({});
-
-    Promise.all([allSupport]).then(values=>{
-        res.render('support/index',
-            {support:values[0]}
-        );
-    }).catch(err=>{
-        console.log(err);
-        res.redirect('/support/index',{support:[]});
-    });
-});
-
-
-Router.get('/create',(req,res)=>{
-    let assets = Asset.findAll({});
-
-    Promise.all([assets]).then(values=>{
-        res.render('support/create',
-            {assets:values[0]}
-        )
-    }).catch(err=>{
-        console.log(err)
-        res.redirect('/support')
-    });
-
-});
-
-Router.post('/store',(req,res)=>{
+//@ROUTE: create support
+Router.post('/',(req,res)=>{
     let support = req.body;
 
     let newSupport = Support.create({
@@ -41,31 +14,33 @@ Router.post('/store',(req,res)=>{
     });
 
     Promise.all([newSupport]).then(values=>{
-        res.redirect('/support')
+        res.status(201).send({msg:"OK"})
     }).catch(err=>{
-        console.log(err);
-        res.redirect('/support')
+        res.status(500).send({})
     });
-})
+});
+//@ROUTE: get all support
+Router.get('/',(req,res)=>{
+    let allSupport = Support.findAll({});
 
-Router.get('/update/:id',(req,res)=>{
+    Promise.all([allSupport]).then(values=>{
+        res.send({support:values[0]});
+    }).catch(err=>{
+        res.status(500).send({support:[]});
+    });
+});
+//@ROUTE: get support by PK
+Router.get('/:id',(req,res)=>{
    let support = Support.findByPk(req.params.id);
-   let assets = Asset.findAll({});
 
-   Promise.all([support,assets]).then(values=>{
-    res.render('support/update',
-        {
-            support:values[0],
-            assets:values[1]
-        }
-    )
+   Promise.all([support]).then(values=>{
+        res.send({support:values[0]});
    }).catch(err=>{
-       console.log(err)
-       res.redirect('/support')
+        res.status(500).send({})
     });
-})
-
-Router.post('/update/:id',(req,res)=>{
+});
+//@ROUTE: update support by PK
+Router.put('/:id',(req,res)=>{
     let support = req.body;
 
     let newSupport = Support.update({
@@ -78,24 +53,23 @@ Router.post('/update/:id',(req,res)=>{
         }
     });
     Promise.all([newSupport]).then(values=>{
-        res.redirect('/support');
+        res.status(200).send({msg:"OK"})
     }).catch(err=>{
-        console.log(err)
-        res.redirect('/support')
+        res.status(500).send({})
     })
-})
-
-Router.get('/:id',(req,res)=>{
-    let support = Support.findByPk(req.params.id,{include:[Asset]});
-
-    Promise.all([support]).then(values=>{
-        res.render('support',
-            {support:values[0]}
-        );
-    }).catch(err=>{
-        console.log(err)
-        // res.render('/support',{support:null})
+});
+//@ROUTE: delete support by PK
+Router.delete('/:id',(req,res)=>{
+    let newSupport = Support.destroy({
+        where: {
+          id: req.params.id
+        }
     });
+    Promise.all([newSupport]).then(values=>{
+        res.status(204).send({})
+    }).catch(err=>{
+        res.status(500).send({})
+    })
 });
 
 module.exports = Router;
