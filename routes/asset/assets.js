@@ -4,7 +4,7 @@ const Asset = require("../../models/assets");
 const Tps = require('../../models/tps');
 const Type = require('../../models/type');
 
-
+//@ROUTE: get all assets
 Router.get('/', (req,res)=>{
     let assets = Asset.findAll({include: [Tps,Type]});
 
@@ -14,7 +14,7 @@ Router.get('/', (req,res)=>{
         res.status(500).send({err})
     })
 });
-
+//@ROUTE: create asset
 Router.post('/',/*upload.single('pic'),*/(req,res)=>{
     let asset = req.body;
     let newAsset = Asset.create({
@@ -33,7 +33,7 @@ Router.post('/',/*upload.single('pic'),*/(req,res)=>{
         res.status(500).send({err})
     });
 })
-
+//@ROUTE: get asset by PK
 Router.get('/:id',(req, res) => {
     let asset = Asset.findByPk(req.params.id,{include: [Tps,Type]});
     let tps = Tps.findAll({});
@@ -44,7 +44,7 @@ Router.get('/:id',(req, res) => {
         res.status(500).send({err})
     });
 });
-
+//@ROUTE: update asset by PK
 Router.put('/:id',(req,res)=>{
     let asset = req.body;
 
@@ -69,7 +69,7 @@ Router.put('/:id',(req,res)=>{
         res.status(500).send({err})
     });
 });
-
+//@ROUTE: delete asset by PK
 Router.delete('/:id',(req,res)=>{
 
     let updateAsset = Asset.destroy({

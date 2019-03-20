@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Type = require('../../models/type');
 
+//@ROUTE: get all types 
 router.get('/', (req, res)=> {
   let type = Type.findAll({})
 
@@ -10,7 +11,7 @@ router.get('/', (req, res)=> {
     res.status(500).send({err})
   })
 });
-
+//@ROUTE: create new type
 router.post('/',(req, res)=>{
  let newType = Type.create({
     name: req.body.name
@@ -22,7 +23,7 @@ router.post('/',(req, res)=>{
     res.status(500).send({err})
   })
 });
-
+//@ROUTE: get type by PK
 router.get('/:id', (req, res) => {
   let type = Type.findByPk(req.params.id);
 
@@ -32,7 +33,7 @@ router.get('/:id', (req, res) => {
     res.status(500).send({err})
   })
 });
-
+//@ROUTE: update type by PK
 router.put('/:id', (req, res) => {
   let newType = Type.update({
     name: req.body.name
@@ -49,7 +50,7 @@ router.put('/:id', (req, res) => {
     res.status(500).send({err})
   })
 });
-
+//@ROUTE: delete type by PK
 router.delete('/:id', (req, res) => {
   let newType = Type.destroy({
     where: {

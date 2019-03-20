@@ -1,7 +1,7 @@
 const Router = require('express').Router();
 const Tps = require('../../models/tps');
 
-
+//@ROUTE: get all tps
 Router.get('/',(req,res)=>{
     let allTps = Tps.findAll();
 
@@ -11,7 +11,7 @@ Router.get('/',(req,res)=>{
         res.status(500).send({err})
     })
 });
-
+//@ROUTE: create tps
 Router.post('/',(req,res)=>{
     let tps = req.body
     let newTps = Tps.create({
@@ -31,7 +31,7 @@ Router.post('/',(req,res)=>{
         res.status(500).send({err})
     })
 });
-
+//@ROUTE: get tps by PK
 Router.get('/:id',(req,res)=>{
     let tps = Tps.findByPk(req.params.id);
     Promise.all([tps]).then(values=>{
@@ -40,7 +40,7 @@ Router.get('/:id',(req,res)=>{
         res.status(500).send({err})
     })
 });
-
+//@ROUTE: update tps by PK
 Router.put('/:id',(req,res)=>{
     let tps = req.body;
 
@@ -65,7 +65,7 @@ Router.put('/:id',(req,res)=>{
         res.status(500).send({err})
     });
 });
-
+//@ROUTE: delete tps by PK
 Router.delete('/:id',(req,res)=>{
     let tps = req.body;
 

@@ -12,7 +12,6 @@ Router.get('/',(req,res)=>{
         res.status(500).send({insurances:[]});
     });
 });
-
 //@ROUTE: create asset insurance
 Router.post('/',(req,res)=>{
     let insurance = req.body;
@@ -30,7 +29,7 @@ Router.post('/',(req,res)=>{
        res.status(500).send({msg:"err"})
     });
 });
-
+//@ROUTE: get insurance by PK
 Router.get('/:id',(req,res)=>{
     let insurance = Insurance.findByPk(req.params.id,{include:[Asset]});
     Promise.all([insurance]).then(values=>{
@@ -39,7 +38,7 @@ Router.get('/:id',(req,res)=>{
         res.status(500).send({});
     });
 });
-
+//@ROUTE: update insurance by PK
 Router.put('/:id',(req,res)=>{
     let insurance = req.body;
 
@@ -60,7 +59,7 @@ Router.put('/:id',(req,res)=>{
         res.status(500).send({})
     });
 });
-
+//@ROUTE: delete insurance by PK
 Router.delete('/:id',(req,res)=>{
     let insurance = req.body;
 
@@ -76,6 +75,5 @@ Router.delete('/:id',(req,res)=>{
         res.status(500).send({})
     });
 });
-
 
 module.exports = Router;
