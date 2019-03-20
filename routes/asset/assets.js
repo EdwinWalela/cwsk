@@ -79,7 +79,7 @@ Router.delete('/:id',(req,res)=>{
     });
 
     Promise.all([updateAsset]).then(values=>{
-        res.send({msg:"OK"});
+        res.status(204).send({});
     }).catch(err=>{
         res.status(500).send({err})
     });
