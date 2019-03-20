@@ -32,7 +32,10 @@ Router.post('/',(req,res)=>{
 Router.get('/:id',(req,res)=>{
     let valuation = Valuation.findByPk(req.params.id,{include:[Asset]});
     Promise.all([valuation]).then(values=>{
-        res.send({valuation:values[0]});
+        if(values[0] !== null){
+            res.send({valuation:values[0]});
+        }
+        res.status(404).send({msg:"Not Found"});
     }).catch(err=>{
         res.status(500).send({err})
     });
@@ -50,9 +53,12 @@ Router.put('/:id',(req,res)=>{
     }});
 
     Promise.all([newValuation]).then(values=>{
-       res.status(200).send({msg:"OK"})
+        if (values[0 >= 1]) {
+            res.send({msg:"OK"});
+        }
+       res.status(404).send({msg:"Not Found"})
     }).catch(err=>{
-       res.status(500).send({})
+       res.status(500).send({});
     });
 })
 //@ROUTE: delete valuation by PK
@@ -64,9 +70,12 @@ Router.delete('/:id',(req,res)=>{
     });
 
     Promise.all([newValuation]).then(values=>{
-       res.status(204).send({})
+        if (values[0] >=1) {
+            res.status(204).send({});
+        }
+       res.status(404).send({msg:"Not Found"});
     }).catch(err=>{
-       res.status(500).send({})
+       res.status(500).send({});
     });
 })
 
