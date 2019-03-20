@@ -35,7 +35,10 @@ Router.post('/',(req,res)=>{
 Router.get('/:id',(req,res)=>{
     let tps = Tps.findByPk(req.params.id);
     Promise.all([tps]).then(values=>{
-         res.send({tps:values[0]})
+        if(values[0] !==null){
+            res.send({tps:values[0]})
+        } 
+        res.status(404).send({msg:"Not Found"})
     }).catch(err=>{
         res.status(500).send({err})
     })
@@ -60,7 +63,10 @@ Router.put('/:id',(req,res)=>{
     });
 
     Promise.all([updateTps]).then(values=>{
-        res.send({msg:"OK"})
+        if(values[0] >= 1){
+            res.send({msg:"OK"})
+        }
+        res.status(404).send({msg:"Not Found"})
     }).catch(err=>{
         res.status(500).send({err})
     });
@@ -74,7 +80,10 @@ Router.delete('/:id',(req,res)=>{
     });
 
     Promise.all([deleteTps]).then(values=>{
-        res.status(204).send({})
+        if(values[0] >= 1){
+            res.status(204).send({})
+        }
+        res.status(404).send({msg:"Not Found"})
     }).catch(err=>{
         res.status(500).send({err})
     });
