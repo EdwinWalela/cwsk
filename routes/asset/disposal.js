@@ -19,7 +19,7 @@ Router.get('/', (req,res)=>{
 Router.post('/',/*upload.single('pic'),*/(req,res)=>{
     let disposal = req.body;
     let newDisposal = Disposal.create({
-        purpose:disposal.name,
+        purpose:disposal.purpose,
         pic:"",
         //pic:asset.pic, ---- TODO(file storage)
         details:disposal.details,
@@ -48,12 +48,11 @@ Router.put('/:id',(req,res)=>{
     let disposal = req.body;
 
     let updateDisposal = Disposal.update({
-        purpose:disposal.name,
+        purpose:disposal.purpose,
         pic:disposal.pic,
         //pic:asset.pic, ---- TODO(file storage)
         details:disposal.details,
         price:disposal.price,
-        insurance:asset.insurance,
         assetId:disposal.asset,
     },{
       where: {
@@ -76,7 +75,7 @@ Router.delete('/:id',(req,res)=>{
     });
 
     Promise.all([deleteDisposal]).then(values=>{
-        res.status(200).send({msg:"OK"});
+        res.status(204).send({msg:"OK"});
     }).catch(err=>{
         res.status(500).send({})
     });
