@@ -13,7 +13,9 @@ const tpsRouter = require('./routes/asset/tps');
 const typeRouter = require('./routes/asset/type');
 const insuranceRouter = require('./routes/asset/insuarance');
 const supportRouter = require('./routes/asset/support');
+const valuationRouter = require('./routes/asset/valuation');
 const disposalRouter = require('./routes/asset/disposal');
+
 
 const app = express();
 
@@ -34,7 +36,8 @@ app.use('/tps', tpsRouter);
 app.use('/types', typeRouter);
 app.use('/insurances',insuranceRouter);
 app.use('/support',supportRouter);
-app.use('/disposals',disposalRouter)
+app.use('/valuations',valuationRouter);
+app.use('/disposals',disposalRouter);
 
 
 // catch 404 and forward to error handler

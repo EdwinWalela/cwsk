@@ -1,47 +1,73 @@
 const Router = require('express').Router();
 const Valuation = require('../../models/assetValuation');
+const Asset = require('../../models/assets');
 
+//@ROUTE: get all valutation
 Router.get('/',(req,res)=>{
-    let allValuations = Valuation.findAll();
+    let allValuations = Valuation.findAll({include:[Asset]});
 
     Promise.all([allValuations]).then(values=>{
-        res.render('/valuation/index',
-            {valuations:values[0]}
-        );
+        res.send({valuations:values[0]});
     }).catch(err=>{
-        console.log(err);
-        // res.render('/valutations',{valuation:null});
+        res.status(500).send({})
     });
 })
-
-//@ROUTE: create asset valuation (req.params.id === assetId)
-Router.post('/valuation',(req,res)=>{
+//@ROUTE: create valuation
+Router.post('/',(req,res)=>{
     let valuation = req.body;
 
     let newValuation = Valuation.create({
-        price_now:valuation.price_now,
+        price_now:valuation.price,
         details:valuation.details,
-        assetId:req.params.id
+        assetId:valuation.asset
     });
 
     Promise.all([newValuation]).then(values=>{
-        //res.redirect('/dashboard');
+       res.status(201).send({msg:"OK"})
     }).catch(err=>{
-        console.log(err)
-        //res.redirect('/dashboard');
+       res.status(500).send({})
     });
 })
-
-//@NOTE: req.params.id === valuation PK
+//@ROUTE: get valuation by PK
 Router.get('/:id',(req,res)=>{
-    let valuation = Valuation.findByPk(req.params.id);
-
+    let valuation = Valuation.findByPk(req.params.id,{include:[Asset]});
     Promise.all([valuation]).then(values=>{
-        res.render('/valuation',{valuation:values[0]});
+        res.send({valuation:values[0]});
     }).catch(err=>{
-        console.log(err)
-        // res.render('/valuaton',{valuation:null})
+        res.status(500).send({err})
     });
 });
+//@ROUTE: update valuation by PK
+Router.put('/:id',(req,res)=>{
+    let valuation = req.body;
+
+    let newValuation = Valuation.update({
+        price_now:valuation.price,
+        details:valuation.details,
+        assetId:valuation.asset
+    },{where:{
+        id:req.params.id
+    }});
+
+    Promise.all([newValuation]).then(values=>{
+       res.status(200).send({msg:"OK"})
+    }).catch(err=>{
+       res.status(500).send({})
+    });
+})
+//@ROUTE: delete valuation by PK
+Router.delete('/:id',(req,res)=>{
+    let newValuation = Valuation.destroy({
+        where:{
+            id:req.params.id
+        }
+    });
+
+    Promise.all([newValuation]).then(values=>{
+       res.status(204).send({})
+    }).catch(err=>{
+       res.status(500).send({})
+    });
+})
 
 module.exports = Router;
