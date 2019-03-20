@@ -34,7 +34,10 @@ Router.get('/:id',(req,res)=>{
    let support = Support.findByPk(req.params.id,{include:[Asset]});
   
    Promise.all([support]).then(values=>{
-        res.send({support:values[0]});
+        if(values !== null){
+            res.send({support:values[0]});
+        }
+        res.status(404).send({msg:"Not Found"});
    }).catch(err=>{
         res.status(500).send({})
     });
@@ -53,7 +56,10 @@ Router.put('/:id',(req,res)=>{
         }
     });
     Promise.all([newSupport]).then(values=>{
-        res.status(200).send({msg:"OK"})
+        if(values[0] >=1){
+            res.send({msg:"OK"})
+        }
+        res.status(404).send({msg:"Not Found"})
     }).catch(err=>{
         res.status(500).send({})
     })
@@ -66,7 +72,10 @@ Router.delete('/:id',(req,res)=>{
         }
     });
     Promise.all([newSupport]).then(values=>{
-        res.status(204).send({})
+        if(values[0] >= 1){
+            res.status(204).send({msg:"OK"})
+        }
+        res.status(404).send({msg:"Not Found"})
     }).catch(err=>{
         res.status(500).send({})
     })
