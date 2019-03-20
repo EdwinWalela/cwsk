@@ -28,7 +28,10 @@ router.get('/:id', (req, res) => {
   let type = Type.findByPk(req.params.id);
 
   Promise.all([type]).then(values=>{
-    res.send({type:values[0]})
+    if(values[0] !== null){
+      res.send({type:values[0]});
+    }
+    res.status(404).send({msg:"Not Found"});
   }).catch(err=>{
     res.status(500).send({err})
   })
@@ -42,11 +45,12 @@ router.put('/:id', (req, res) => {
       id: req.params.id
     }
   });
-  Promise.all([newType])
-  .then(values=> {
-    res.send({msg:"OK"})
-  })
-  .catch(err=>{
+  Promise.all([newType]).then(values=> {
+    if(values[0] >= 1){
+      res.send({msg:"OK"})
+    }
+    res.status(404).send({msg:"Not Found"})
+  }).catch(err=>{
     res.status(500).send({err})
   })
 });
@@ -57,9 +61,11 @@ router.delete('/:id', (req, res) => {
       id: req.params.id
     }
   });
-  Promise.all([newType])
-  .then(values=> {
-    res.status(204).send({})
+  Promise.all([newType]).then(values=> {
+    if(values[0] >= 1){
+      res.status(204).send({})
+    }
+    res.status(404).send({msg:"Not Found"})
   })
   .catch(err=>{
     res.status(500).send({err})
