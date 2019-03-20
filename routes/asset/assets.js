@@ -36,10 +36,12 @@ Router.post('/',/*upload.single('pic'),*/(req,res)=>{
 //@ROUTE: get asset by PK
 Router.get('/:id',(req, res) => {
     let asset = Asset.findByPk(req.params.id,{include: [Tps,Type]});
-    let tps = Tps.findAll({});
-    let types = Type.findAll({});
-    Promise.all([asset,tps,types]).then(values=>{
-        res.send({asset:values[0]});
+    Promise.all([asset]).then(values=>{
+        if(values[0] !== null){
+            res.send({asset:values[0]});
+        }
+        res.status(404).send({msg:"Not Found"})
+       
     }).catch(err=>{
         res.status(500).send({err})
     });
@@ -64,7 +66,10 @@ Router.put('/:id',(req,res)=>{
     });
 
     Promise.all([updateAsset]).then(values=>{
-        res.send({msg:"OK"});
+        if(values[0] >= 1){
+            res.send({msg:"OK"});
+        }
+        res.status(404).send({msg:"Not Found"})
     }).catch(err=>{
         res.status(500).send({err})
     });
@@ -79,7 +84,10 @@ Router.delete('/:id',(req,res)=>{
     });
 
     Promise.all([updateAsset]).then(values=>{
-        res.status(204).send({});
+        if(values[0] >= 1){
+            res.status(204).send({msg:"OK"});
+        }
+        res.status(404).send({msg:"Not Found"})
     }).catch(err=>{
         res.status(500).send({err})
     });

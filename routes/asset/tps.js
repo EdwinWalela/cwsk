@@ -67,13 +67,13 @@ Router.put('/:id',(req,res)=>{
 });
 //@ROUTE: delete tps by PK
 Router.delete('/:id',(req,res)=>{
-    let updateTps = Tps.destroy({
+    let deleteTps = Tps.destroy({
       where: {
         id: req.params.id
       }
     });
 
-    Promise.all([updateTps]).then(values=>{
+    Promise.all([deleteTps]).then(values=>{
         res.status(204).send({})
     }).catch(err=>{
         res.status(500).send({err})
