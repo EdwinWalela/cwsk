@@ -61,8 +61,6 @@ Router.put('/:id',(req,res)=>{
 });
 //@ROUTE: delete insurance by PK
 Router.delete('/:id',(req,res)=>{
-    let insurance = req.body;
-
     let newInsurance = Insurance.destroy({
         where: {
           id: req.params.id

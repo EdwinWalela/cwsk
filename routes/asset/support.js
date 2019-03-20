@@ -21,18 +21,18 @@ Router.post('/',(req,res)=>{
 });
 //@ROUTE: get all support
 Router.get('/',(req,res)=>{
-    let allSupport = Support.findAll({});
+    let allSupport = Support.findAll({include:[Asset]});
 
     Promise.all([allSupport]).then(values=>{
-        res.send({support:values[0]});
+        res.send({supports:values[0]});
     }).catch(err=>{
         res.status(500).send({support:[]});
     });
 });
 //@ROUTE: get support by PK
 Router.get('/:id',(req,res)=>{
-   let support = Support.findByPk(req.params.id);
-
+   let support = Support.findByPk(req.params.id,{include:[Asset]});
+  
    Promise.all([support]).then(values=>{
         res.send({support:values[0]});
    }).catch(err=>{

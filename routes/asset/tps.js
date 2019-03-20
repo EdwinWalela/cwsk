@@ -67,8 +67,6 @@ Router.put('/:id',(req,res)=>{
 });
 //@ROUTE: delete tps by PK
 Router.delete('/:id',(req,res)=>{
-    let tps = req.body;
-
     let updateTps = Tps.destroy({
       where: {
         id: req.params.id
