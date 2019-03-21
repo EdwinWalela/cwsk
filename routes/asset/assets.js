@@ -1,11 +1,16 @@
 const Router = require('express').Router();
 const upload = require('../../config/fileStorage');
+
+//Models
 const Asset = require("../../models/assets");
 const Tps = require('../../models/tps');
 const Type = require('../../models/type');
 
+// Middleware
+const tokenVerification = require("../middleware/tokenVerification");
+
 //@ROUTE: get all assets
-Router.get('/', (req,res)=>{
+Router.get('/',tokenVerification,(req,res)=>{
     let assets = Asset.findAll({include: [Tps,Type]});
 
     Promise.all([assets]).then(values=>{
@@ -15,7 +20,7 @@ Router.get('/', (req,res)=>{
     })
 });
 //@ROUTE: create asset
-Router.post('/',/*upload.single('pic'),*/(req,res)=>{
+Router.post('/',tokenVerification,/*upload.single('pic'),*/(req,res)=>{
     let asset = req.body;
     
     let newAsset = Asset.create({
@@ -35,7 +40,7 @@ Router.post('/',/*upload.single('pic'),*/(req,res)=>{
     });
 })
 //@ROUTE: get asset by PK
-Router.get('/:id',(req, res) => {
+Router.get('/:id',tokenVerification,(req, res) => {
     let asset = Asset.findByPk(req.params.id,{include: [Tps,Type]});
     Promise.all([asset]).then(values=>{
         if(values[0] !== null){
@@ -49,7 +54,7 @@ Router.get('/:id',(req, res) => {
     });
 });
 //@ROUTE: update asset by PK
-Router.put('/:id',(req,res)=>{
+Router.put('/:id',tokenVerification,(req,res)=>{
     let asset = req.body;
 
     let updateAsset = Asset.update({
@@ -78,7 +83,7 @@ Router.put('/:id',(req,res)=>{
     });
 });
 //@ROUTE: delete asset by PK
-Router.delete('/:id',(req,res)=>{
+Router.delete('/:id',tokenVerification,(req,res)=>{
 
     let updateAsset = Asset.destroy({
       where: {

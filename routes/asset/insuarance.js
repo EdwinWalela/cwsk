@@ -1,9 +1,14 @@
 const Router = require('express').Router();
+
+// Models
 const Insurance = require('../../models/insurance');
 const Asset = require('../../models/assets');
 
+// Middleware
+const tokenVerification = require("../middleware/tokenVerification");
+
 //@ROUTE: get all insurances
-Router.get('/',(req,res)=>{
+Router.get('/', tokenVerification,(req,res)=>{
     let allInsurance = Insurance.findAll({include:[Asset]});
 
     Promise.all([allInsurance]).then(values=>{
@@ -13,7 +18,7 @@ Router.get('/',(req,res)=>{
     });
 });
 //@ROUTE: create asset insurance
-Router.post('/',(req,res)=>{
+Router.post('/', tokenVerification,(req,res)=>{
     let insurance = req.body;
 
     let newInsurance = Insurance.create({
@@ -30,7 +35,7 @@ Router.post('/',(req,res)=>{
     });
 });
 //@ROUTE: get insurance by PK
-Router.get('/:id',(req,res)=>{
+Router.get('/:id', tokenVerification,(req,res)=>{
     let insurance = Insurance.findByPk(req.params.id,{include:[Asset]});
     Promise.all([insurance]).then(values=>{
         if(values[0] !== null){
@@ -43,7 +48,7 @@ Router.get('/:id',(req,res)=>{
     });
 });
 //@ROUTE: update insurance by PK
-Router.put('/:id',(req,res)=>{
+Router.put('/:id', tokenVerification,(req,res)=>{
     let insurance = req.body;
 
     let newInsurance = Insurance.update({
@@ -68,7 +73,7 @@ Router.put('/:id',(req,res)=>{
     });
 });
 //@ROUTE: delete insurance by PK
-Router.delete('/:id',(req,res)=>{
+Router.delete('/:id', tokenVerification,(req,res)=>{
     let newInsurance = Insurance.destroy({
         where: {
           id: req.params.id

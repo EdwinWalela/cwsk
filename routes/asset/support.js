@@ -1,9 +1,15 @@
 const Router = require('express').Router();
+
+// Models
 const Support = require('../../models/support');
 const Asset = require('../../models/assets');
 
+// Middleware
+const tokenVerification = require("../middleware/tokenVerification");
+
+
 //@ROUTE: create support
-Router.post('/',(req,res)=>{
+Router.post('/', tokenVerification,(req,res)=>{
     let support = req.body;
 
     let newSupport = Support.create({
@@ -20,7 +26,7 @@ Router.post('/',(req,res)=>{
     });
 });
 //@ROUTE: get all support
-Router.get('/',(req,res)=>{
+Router.get('/', tokenVerification,(req,res)=>{
     let allSupport = Support.findAll({include:[Asset]});
 
     Promise.all([allSupport]).then(values=>{
@@ -30,7 +36,7 @@ Router.get('/',(req,res)=>{
     });
 });
 //@ROUTE: get support by PK
-Router.get('/:id',(req,res)=>{
+Router.get('/:id', tokenVerification,(req,res)=>{
    let support = Support.findByPk(req.params.id,{include:[Asset]});
   
    Promise.all([support]).then(values=>{
@@ -44,7 +50,7 @@ Router.get('/:id',(req,res)=>{
     });
 });
 //@ROUTE: update support by PK
-Router.put('/:id',(req,res)=>{
+Router.put('/:id', tokenVerification,(req,res)=>{
     let support = req.body;
 
     let newSupport = Support.update({
@@ -67,7 +73,7 @@ Router.put('/:id',(req,res)=>{
     })
 });
 //@ROUTE: delete support by PK
-Router.delete('/:id',(req,res)=>{
+Router.delete('/:id', tokenVerification,(req,res)=>{
     let newSupport = Support.destroy({
         where: {
           id: req.params.id

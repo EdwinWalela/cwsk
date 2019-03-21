@@ -1,8 +1,13 @@
 const router = require('express').Router();
+
+// Models
 const Type = require('../../models/type');
 
+// Middleware
+const tokenVerification = require("../middleware/tokenVerification");
+
 //@ROUTE: get all types 
-router.get('/', (req, res)=> {
+router.get('/', tokenVerification,(req, res)=> {
   let type = Type.findAll({})
 
   Promise.all([type]).then(values=>{
@@ -12,7 +17,7 @@ router.get('/', (req, res)=> {
   })
 });
 //@ROUTE: create new type
-router.post('/',(req, res)=>{
+router.post('/',tokenVerification,(req, res)=>{
  let newType = Type.create({
     name: req.body.name
   });
@@ -24,7 +29,7 @@ router.post('/',(req, res)=>{
   })
 });
 //@ROUTE: get type by PK
-router.get('/:id', (req, res) => {
+router.get('/:id', tokenVerification,(req, res) => {
   let type = Type.findByPk(req.params.id);
 
   Promise.all([type]).then(values=>{
@@ -38,7 +43,7 @@ router.get('/:id', (req, res) => {
   })
 });
 //@ROUTE: update type by PK
-router.put('/:id', (req, res) => {
+router.put('/:id', tokenVerification,(req, res) => {
   let newType = Type.update({
     name: req.body.name
   },{
@@ -57,7 +62,7 @@ router.put('/:id', (req, res) => {
   })
 });
 //@ROUTE: delete type by PK
-router.delete('/:id', (req, res) => {
+router.delete('/:id', tokenVerification,(req, res) => {
   let newType = Type.destroy({
     where: {
       id: req.params.id

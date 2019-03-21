@@ -1,12 +1,15 @@
 const Router = require('express').Router();
 const upload = require('../../config/fileStorage');
 
+// Models
 const Asset = require("../../models/assets");
 const Disposal = require("../../models/disposal");
 
+// Middleware
+const tokenVerification = require("../middleware/tokenVerification");
 
 //@ROUTE: get all disposals
-Router.get('/', (req,res)=>{
+Router.get('/', tokenVerification,(req,res)=>{
     let disposal = Disposal.findAll({include: [Asset]});
     
     Promise.all([disposal]).then(values=>{
@@ -16,7 +19,7 @@ Router.get('/', (req,res)=>{
     });
 });
 //@ROUTE: create disposal
-Router.post('/',/*upload.single('pic'),*/(req,res)=>{
+Router.post('/', tokenVerification,/*upload.single('pic'),*/(req,res)=>{
     let disposal = req.body;
     let newDisposal = Disposal.create({
         purpose:disposal.purpose,
@@ -34,7 +37,7 @@ Router.post('/',/*upload.single('pic'),*/(req,res)=>{
     });
 });
 //@ROUTE: get disposal by PK
-Router.get('/:id',(req, res) => {
+Router.get('/:id', tokenVerification,(req, res) => {
   let disposal = Disposal.findByPk(req.params.id,{include:[Asset]});
  
   Promise.all([disposal]).then(values=>{
@@ -48,7 +51,7 @@ Router.get('/:id',(req, res) => {
   });
 });
 //@ROUTE: update disposal by PK
-Router.put('/:id',(req,res)=>{
+Router.put('/:id', tokenVerification,(req,res)=>{
     let disposal = req.body;
 
     let updateDisposal = Disposal.update({
@@ -75,7 +78,7 @@ Router.put('/:id',(req,res)=>{
     });
 });
 //@ROUTE: delete disposal by PK
-Router.delete('/:id',(req,res)=>{
+Router.delete('/:id', tokenVerification,(req,res)=>{
     let deleteDisposal = Disposal.destroy({
       where: {
         id: req.params.id

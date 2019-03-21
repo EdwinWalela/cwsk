@@ -1,8 +1,13 @@
 const Router = require('express').Router();
+
+// Models
 const Tps = require('../../models/tps');
 
+// Middleware
+const tokenVerification = require("../middleware/tokenVerification");
+
 //@ROUTE: get all tps
-Router.get('/',(req,res)=>{
+Router.get('/', tokenVerification,(req,res)=>{
     let allTps = Tps.findAll();
 
     Promise.all([allTps]).then(values=>{
@@ -12,7 +17,7 @@ Router.get('/',(req,res)=>{
     })
 });
 //@ROUTE: create tps
-Router.post('/',(req,res)=>{
+Router.post('/', tokenVerification,(req,res)=>{
     let tps = req.body
     let newTps = Tps.create({
         name:tps.name,
@@ -32,7 +37,7 @@ Router.post('/',(req,res)=>{
     })
 });
 //@ROUTE: get tps by PK
-Router.get('/:id',(req,res)=>{
+Router.get('/:id', tokenVerification,(req,res)=>{
     let tps = Tps.findByPk(req.params.id);
     Promise.all([tps]).then(values=>{
         if(values[0] !==null){
@@ -45,7 +50,7 @@ Router.get('/:id',(req,res)=>{
     })
 });
 //@ROUTE: update tps by PK
-Router.put('/:id',(req,res)=>{
+Router.put('/:id', tokenVerification,(req,res)=>{
     let tps = req.body;
 
     let updateTps = Tps.update({
@@ -74,7 +79,7 @@ Router.put('/:id',(req,res)=>{
     });
 });
 //@ROUTE: delete tps by PK
-Router.delete('/:id',(req,res)=>{
+Router.delete('/:id', tokenVerification,(req,res)=>{
     let deleteTps = Tps.destroy({
       where: {
         id: req.params.id

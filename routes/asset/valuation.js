@@ -1,6 +1,11 @@
 const Router = require('express').Router();
+
+// Models
 const Valuation = require('../../models/assetValuation');
 const Asset = require('../../models/assets');
+
+// Middleware
+const tokenVerification = require("../middleware/tokenVerification");
 
 //@ROUTE: get all valutation
 Router.get('/',(req,res)=>{
