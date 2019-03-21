@@ -7,7 +7,6 @@ const Asset = require('../../models/assets');
 // Middleware
 const tokenVerification = require("../middleware/tokenVerification");
 
-
 //@ROUTE: create support
 Router.post('/', tokenVerification,(req,res)=>{
     let support = req.body;
@@ -22,7 +21,16 @@ Router.post('/', tokenVerification,(req,res)=>{
     Promise.all([newSupport]).then(values=>{
         res.status(201).send({msg:"OK"})
     }).catch(err=>{
-        res.status(500).send({})
+        if(err.name){
+            res.status(400).send({
+                err:{
+                    msg:err.name,
+                    fields:err.fields
+                }
+            });
+        }else{
+            res.status(500).send({err});
+        }
     });
 });
 //@ROUTE: get all support
@@ -69,8 +77,17 @@ Router.put('/:id', tokenVerification,(req,res)=>{
             res.status(404).send({msg:"Not Found"});
         }
     }).catch(err=>{
-        res.status(500).send({})
-    })
+        if(err.name){
+            res.status(400).send({
+                err:{
+                    msg:err.name,
+                    fields:err.fields
+                }
+            });
+        }else{
+            res.status(500).send({err});
+        }
+    });
 });
 //@ROUTE: delete support by PK
 Router.delete('/:id', tokenVerification,(req,res)=>{

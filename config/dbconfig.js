@@ -18,7 +18,8 @@ sequelize.authenticate()
         console.log('success : db connection established')
     })
     .catch(err=>{
-        console.log('fail : Unable to connect to db\n',err)
+        console.log(err.name);
+        process.exit(1);
     });
 
 sequelize.sync({
