@@ -68,7 +68,7 @@ Router.post('/login',(req,res)=>{
 				res.status(401).send({msg:"Incorrect combination"})
 			}
 		}else{
-			res.status(404).send({msg:"Not Found"})
+			res.status(404).send({msg:"User Not Found"})
 		}
 	}).catch(err=>{
 		res.status(500).send({err})

@@ -55,7 +55,7 @@ Router.get('/:id',tokenVerification,(req, res) => {
         if(values[0] !== null){
             res.send({asset:values[0]});
         }else{
-            res.status(404).send({msg:"Not Found"})
+            res.status(404).send({msg:"Asset Not Found"})
         }
        
     }).catch(err=>{
@@ -85,7 +85,7 @@ Router.put('/:id',tokenVerification,(req,res)=>{
         if(values[0] >= 1){
             res.send({msg:"OK"});
         }else{
-            res.status(404).send({msg:"Not Found"});
+            res.status(404).send({msg:"Asset Not Found"});
         }
     }).catch(err=>{
         if(err.name){
@@ -113,7 +113,7 @@ Router.delete('/:id',tokenVerification,(req,res)=>{
         if(values[0] >= 1){
             res.status(204).send({msg:"OK"});
         }else{
-            res.status(404).send({msg:"Not Found"})
+            res.status(404).send({msg:"Asset Not Found"})
         }
     }).catch(err=>{
         res.status(500).send({err})

@@ -50,7 +50,7 @@ Router.get('/:id', tokenVerification,(req,res)=>{
         if(values[0] !== null){
             res.send({insurance:values[0]});
         }else{
-            res.status(404).send({msg:"Not Found"});
+            res.status(404).send({msg:"Insurance Not Found"});
         }
     }).catch(err=>{
         res.status(500).send({});
@@ -75,7 +75,7 @@ Router.put('/:id', tokenVerification,(req,res)=>{
         if(values[0] >= 1){
             res.send({msg:"OK"})
         }else{
-            res.status(404).send({msg:"Not Found"});
+            res.status(404).send({msg:"Insurance Not Found"});
         }
     }).catch(err=>{
         if(err.name){
@@ -102,7 +102,7 @@ Router.delete('/:id', tokenVerification,(req,res)=>{
         if(values[0] >= 1){
             res.status(204).send({})
         }else{
-            res.status(404).send({msg:"Not Found"});
+            res.status(404).send({msg:"Insurance Not Found"});
         }
     }).catch(err=>{
         res.status(500).send({})
