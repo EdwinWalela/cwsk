@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
@@ -17,6 +18,8 @@ const valuationRouter = require('./routes/asset/valuation');
 const disposalRouter = require('./routes/asset/disposal');
 const roleRouter =require("./routes/asset/roles");
 
+
+app.use(cors({}))
 
 const app = express();
 

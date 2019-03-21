@@ -33,7 +33,16 @@ Router.post('/', tokenVerification,/*upload.single('pic'),*/(req,res)=>{
     Promise.all([newDisposal]).then(values => {
         res.status(201).send({msg:"OK"})
     }).catch(err=>{
-        res.status(500).send({})
+        if(err.name){
+            res.status(400).send({
+                err:{
+                    msg:err.name,
+                    fields:err.fields
+                }
+            });
+        }else{
+            res.status(500).send({err});
+        }
     });
 });
 //@ROUTE: get disposal by PK
@@ -74,7 +83,16 @@ Router.put('/:id', tokenVerification,(req,res)=>{
             res.status(404).send({msg:"Not Found"});
         }
     }).catch(err=>{
-        res.status(500).send({})
+        if(err.name){
+            res.status(400).send({
+                err:{
+                    msg:err.name,
+                    fields:err.fields
+                }
+            });
+        }else{
+            res.status(500).send({err});
+        }
     });
 });
 //@ROUTE: delete disposal by PK
