@@ -35,8 +35,9 @@ Router.get('/:id',(req,res)=>{
     Promise.all([insurance]).then(values=>{
         if(values[0] !== null){
             res.send({insurance:values[0]});
+        }else{
+            res.status(404).send({msg:"Not Found"});
         }
-        res.status(404).send({msg:"Not Found"});
     }).catch(err=>{
         res.status(500).send({});
     });
@@ -59,8 +60,9 @@ Router.put('/:id',(req,res)=>{
     Promise.all([newInsurance]).then(values=>{
         if(values[0] >= 1){
             res.send({msg:"OK"})
+        }else{
+            res.status(404).send({msg:"Not Found"});
         }
-        res.status(404).send({msg:"Not Found"})
     }).catch(err=>{
         res.status(500).send({})
     });
@@ -76,8 +78,9 @@ Router.delete('/:id',(req,res)=>{
     Promise.all([newInsurance]).then(values=>{
         if(values[0] >= 1){
             res.status(204).send({}) 
+        }else{
+            res.status(404).send({msg:"Not Found"});
         }
-        res.status(404).send({msg:"Not Found"})
     }).catch(err=>{
         res.status(500).send({})
     });

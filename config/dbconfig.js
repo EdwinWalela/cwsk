@@ -22,7 +22,7 @@ sequelize.authenticate()
     });
 
 sequelize.sync({
-  force:false  //  IF YOU SET THIS TO FALSE, IT WONT RECREATE THE DATABASE
+  force:true  //  IF YOU SET THIS TO FALSE, IT WONT RECREATE THE DATABASE
 });
 
 module.exports = sequelize;

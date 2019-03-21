@@ -17,6 +17,7 @@ Router.get('/', (req,res)=>{
 //@ROUTE: create asset
 Router.post('/',/*upload.single('pic'),*/(req,res)=>{
     let asset = req.body;
+    
     let newAsset = Asset.create({
         name:asset.name,
         pic:null,
@@ -39,8 +40,9 @@ Router.get('/:id',(req, res) => {
     Promise.all([asset]).then(values=>{
         if(values[0] !== null){
             res.send({asset:values[0]});
+        }else{
+            res.status(404).send({msg:"Not Found"})
         }
-        res.status(404).send({msg:"Not Found"})
        
     }).catch(err=>{
         res.status(500).send({err})
@@ -68,8 +70,9 @@ Router.put('/:id',(req,res)=>{
     Promise.all([updateAsset]).then(values=>{
         if(values[0] >= 1){
             res.send({msg:"OK"});
+        }else{
+            res.status(404).send({msg:"Not Found"});
         }
-        res.status(404).send({msg:"Not Found"})
     }).catch(err=>{
         res.status(500).send({err})
     });
@@ -86,8 +89,9 @@ Router.delete('/:id',(req,res)=>{
     Promise.all([updateAsset]).then(values=>{
         if(values[0] >= 1){
             res.status(204).send({msg:"OK"});
+        }else{
+            res.status(404).send({msg:"Not Found"})
         }
-        res.status(404).send({msg:"Not Found"})
     }).catch(err=>{
         res.status(500).send({err})
     });
