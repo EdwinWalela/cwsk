@@ -15,6 +15,16 @@ const saltRounds = 10;
 
 Router.get('/',(req,res)=>{
     res.render('site/index')
-})
+});
+
+Router.get('/initialize',(req,res)=>{
+  User.create({
+    id: 1,
+    email: "admin@admin.com",
+    password: "1234",
+  }).then(data => {
+    res.json(data)
+  })
+});
 
 module.exports = Router;

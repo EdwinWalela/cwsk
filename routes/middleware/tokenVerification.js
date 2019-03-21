@@ -14,7 +14,7 @@ const verifyToken = (req,res,next) =>{
                 req.user = payload.user
                 next();
             }
-        });   
+        });
     }else{
         //Unauthorized
         res.status(401).send({msg:"Access token missing"})

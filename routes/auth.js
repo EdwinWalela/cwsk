@@ -19,7 +19,7 @@ Router.post('/register',(req,res)=>{
 		permissions:"",
 		password:user.password,
 		roleId:1,
-		tpsID:user.tps,
+		tpsId:user.tps,
 		confirmed:false
 	});
 	Promise.all([newUser]).then(values=>{
@@ -28,7 +28,7 @@ Router.post('/register',(req,res)=>{
 			res.status(500).send({err})
 	});
 });
-	
+
 Router.post('/login',(req,res)=>{
 
 	let userlogin = req.body
@@ -41,7 +41,7 @@ Router.post('/login',(req,res)=>{
 
 	Promise.all([user]).then(values=>{
 
-		if (values[0] !== null) {  
+		if (values[0] !== null) {
 			let user = values[0];
 
 			let auth = bcrypt.compareSync(userlogin.password, user.password);
@@ -52,7 +52,7 @@ Router.post('/login',(req,res)=>{
 					email:user.email,
 					perm:user.permissions
 				  }
-		  
+
 				  jwt.sign(
 					{user:jwtPayload},
 					jwtConfig.SECRET,

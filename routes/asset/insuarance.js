@@ -82,7 +82,7 @@ Router.delete('/:id', tokenVerification,(req,res)=>{
 
     Promise.all([newInsurance]).then(values=>{
         if(values[0] >= 1){
-            res.status(204).send({}) 
+            res.status(204).send({})
         }else{
             res.status(404).send({msg:"Not Found"});
         }

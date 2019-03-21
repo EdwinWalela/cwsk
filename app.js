@@ -30,6 +30,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Middleware
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+});
+
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/assets', assetsRouter);
@@ -43,6 +48,7 @@ app.use('/roles',roleRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
   next(createError(404));
 });
 

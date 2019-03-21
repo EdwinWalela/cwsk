@@ -38,7 +38,7 @@ Router.get('/', tokenVerification,(req,res)=>{
 //@ROUTE: get support by PK
 Router.get('/:id', tokenVerification,(req,res)=>{
    let support = Support.findByPk(req.params.id,{include:[Asset]});
-  
+
    Promise.all([support]).then(values=>{
         if(values !== null){
             res.send({support:values[0]});
