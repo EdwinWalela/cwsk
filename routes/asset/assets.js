@@ -20,7 +20,7 @@ Router.get('/',tokenVerification,(req,res)=>{
     })
 });
 //@ROUTE: create asset
-Router.post('/',tokenVerification,/*upload.single('pic'),*/(req,res)=>{
+Router.post('/',tokenVerification,upload.single('pic'),(req,res)=>{
     let asset = req.body;
     
     let newAsset = Asset.create({

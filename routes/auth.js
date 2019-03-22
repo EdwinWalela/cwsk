@@ -56,7 +56,7 @@ Router.post('/login',(req,res)=>{
 				  jwt.sign(
 					{user:jwtPayload},
 					jwtConfig.SECRET,
-					{expiresIn:"1h"},
+					{expiresIn:jwtConfig.EXPIRY},
 					(err,token)=>{
 						if(err){
 						res.status(500).send({err})
