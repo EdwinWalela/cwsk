@@ -2,13 +2,14 @@ const Router = require('express').Router();
 
 // Models
 const Tps = require('../../models/tps');
+const Type = require("../../models/type");
 
 // Middleware
 const tokenVerification = require("../middleware/tokenVerification");
 
 //@ROUTE: get all tps
 Router.get('/', tokenVerification,(req,res)=>{
-    let allTps = Tps.findAll();
+    let allTps = Tps.findAll({include:[Type]});
 
     Promise.all([allTps]).then(values=>{
         res.send({tps:values[0]});

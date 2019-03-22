@@ -21,6 +21,7 @@ Router.get('/',tokenVerification,(req,res)=>{
 });
 //@ROUTE: create asset
 Router.post('/',tokenVerification,upload.single('pic'),(req,res)=>{
+    console.log(req.file)
     let asset = req.body;
     
     let newAsset = Asset.create({
@@ -63,9 +64,9 @@ Router.get('/:id',tokenVerification,(req, res) => {
     });
 });
 //@ROUTE: update asset by PK
-Router.put('/:id',tokenVerification,(req,res)=>{
+Router.put('/:id',tokenVerification,upload.single('pic'),(req,res)=>{
     let asset = req.body;
-
+    console.log(req.file)
     let updateAsset = Asset.update({
         name:asset.name,
         pic:asset.pic,
