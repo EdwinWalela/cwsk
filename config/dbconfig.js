@@ -18,7 +18,7 @@ sequelize.authenticate()
         console.log('success : db connection established')
     })
     .catch(err=>{
-        console.log(err.name);
+        console.log(err);
         process.exit(1);
     });
 
