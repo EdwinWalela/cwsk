@@ -51,8 +51,12 @@ const dbInit = (req,res,next) =>{
         tpsId:1
     });
 
-    Promise.all([newTypeA,newTypeB,newTps,newAsset,newRole,newUser]).then(values=>{
-        next();
+    Promise.all([newTypeA,newTypeB]).then(values=>{
+        Promise.all([newTps,newAsset,newRole]).then(values=>{
+            Promise.all([newUser]).then(values=>{
+                next();
+            })
+        })
     }).catch(err=>{
         res.status(500).send({err})
     })
