@@ -9,8 +9,8 @@ const Asset = sequelize.define('assets',{
     name:Sequelize.STRING,
     pic:Sequelize.STRING,
     tag:Sequelize.STRING,
-    cost: Sequelize.STRING,
-    valuation:Sequelize.STRING,
+    cost: Sequelize.INTEGER,
+    valuation:Sequelize.INTEGER,
     insurance:Sequelize.STRING
 },{
     timestamps: true, // timestamps will now be true

@@ -29,8 +29,8 @@ const dbInit = () =>{
         name:"Ambulance",
         pic:"",
         tag:"",
-        cost:"2000000",
-        valuation:"2000000",
+        cost:2000000,
+        valuation:2000000,
         insurance:"Jubilee Insurance",
         tpsId:1,
         typeId:2
