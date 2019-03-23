@@ -10,7 +10,7 @@ let db;
 // Initialize db after 10 seconds
 setTimeout(()=>{
   db = DB_INIT();
-},10000)
+},13000)
 
 
 const indexRouter = require('./routes/index');
@@ -26,6 +26,7 @@ const valuationRouter = require('./routes/asset/valuation');
 const disposalRouter = require('./routes/asset/disposal');
 const roleRouter =require("./routes/asset/roles");
 const reportRouter = require("./routes/asset/report");
+const userRouter = require("./routes/users");
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use("/public",express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+app.use('/users',userRouter);
 app.use('/assets', assetsRouter);
 app.use('/tps', tpsRouter);
 app.use('/types', typeRouter);

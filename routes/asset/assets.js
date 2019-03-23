@@ -8,6 +8,7 @@ const Type = require('../../models/type');
 
 // Middleware
 const tokenVerification = require("../middleware/tokenVerification");
+const permissions = require("../middleware/permissionVerification");
 
 //@ROUTE: get all assets
 Router.get('/',tokenVerification,(req,res)=>{
@@ -20,7 +21,7 @@ Router.get('/',tokenVerification,(req,res)=>{
     })
 });
 //@ROUTE: create asset
-Router.post('/',tokenVerification,upload.single('pic'),(req,res)=>{
+Router.post('/',tokenVerification,permissions.Create,upload.single('pic'),(req,res)=>{
     let asset = req.body;
     let image = req.file
 
@@ -65,7 +66,7 @@ Router.get('/:id',tokenVerification,(req, res) => {
     });
 });
 //@ROUTE: update asset by PK
-Router.put('/:id',tokenVerification,upload.single('pic'),(req,res)=>{
+Router.put('/:id',tokenVerification,permissions.Update,upload.single('pic'),(req,res)=>{
     let asset = req.body;
     let image = req.file
     let updateAsset = Asset.update({
@@ -103,7 +104,7 @@ Router.put('/:id',tokenVerification,upload.single('pic'),(req,res)=>{
     });
 });
 //@ROUTE: delete asset by PK
-Router.delete('/:id',tokenVerification,(req,res)=>{
+Router.delete('/:id',tokenVerification,permissions.Delete,(req,res)=>{
 
     let updateAsset = Asset.destroy({
       where: {

@@ -6,6 +6,7 @@ const Asset = require('../../models/assets');
 
 // Middleware
 const tokenVerification = require("../middleware/tokenVerification");
+const permissions = require("../middleware/permissionVerification");
 
 //@ROUTE: get all insurances
 Router.get('/', tokenVerification,(req,res)=>{
@@ -18,7 +19,7 @@ Router.get('/', tokenVerification,(req,res)=>{
     });
 });
 //@ROUTE: create asset insurance
-Router.post('/', tokenVerification,(req,res)=>{
+Router.post('/', tokenVerification,permissions.Create,(req,res)=>{
     let insurance = req.body;
 
     let newInsurance = Insurance.create({
@@ -57,7 +58,7 @@ Router.get('/:id', tokenVerification,(req,res)=>{
     });
 });
 //@ROUTE: update insurance by PK
-Router.put('/:id', tokenVerification,(req,res)=>{
+Router.put('/:id', tokenVerification,permissions.Update,(req,res)=>{
     let insurance = req.body;
 
     let newInsurance = Insurance.update({
@@ -91,7 +92,7 @@ Router.put('/:id', tokenVerification,(req,res)=>{
     });
 });
 //@ROUTE: delete insurance by PK
-Router.delete('/:id', tokenVerification,(req,res)=>{
+Router.delete('/:id', tokenVerification,permissions.Delete,(req,res)=>{
     let newInsurance = Insurance.destroy({
         where: {
           id: req.params.id

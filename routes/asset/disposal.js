@@ -7,6 +7,7 @@ const Disposal = require("../../models/disposal");
 
 // Middleware
 const tokenVerification = require("../middleware/tokenVerification");
+const permissions = require("../middleware/permissionVerification");
 
 //@ROUTE: get all disposals
 Router.get('/', tokenVerification,(req,res)=>{
@@ -19,7 +20,7 @@ Router.get('/', tokenVerification,(req,res)=>{
     });
 });
 //@ROUTE: create disposal
-Router.post('/', tokenVerification,/*upload.single('pic'),*/(req,res)=>{
+Router.post('/', tokenVerification,permissions.Create,/*upload.single('pic'),*/(req,res)=>{
     let disposal = req.body;
     let newDisposal = Disposal.create({
         purpose:disposal.purpose,
@@ -60,7 +61,7 @@ Router.get('/:id', tokenVerification,(req, res) => {
   });
 });
 //@ROUTE: update disposal by PK
-Router.put('/:id', tokenVerification,(req,res)=>{
+Router.put('/:id', tokenVerification,permissions.Update,(req,res)=>{
     let disposal = req.body;
 
     let updateDisposal = Disposal.update({
@@ -96,7 +97,7 @@ Router.put('/:id', tokenVerification,(req,res)=>{
     });
 });
 //@ROUTE: delete disposal by PK
-Router.delete('/:id', tokenVerification,(req,res)=>{
+Router.delete('/:id', tokenVerification,permissions.Delete,(req,res)=>{
     let deleteDisposal = Disposal.destroy({
       where: {
         id: req.params.id

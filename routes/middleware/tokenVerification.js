@@ -12,7 +12,6 @@ const verifyToken = (req,res,next) =>{
             if(err){
                 res.status(401).send({msg:err.message})
             }else{
-                req.user = payload.user
                 next();
             }
         });

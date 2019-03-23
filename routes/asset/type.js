@@ -5,6 +5,7 @@ const Type = require('../../models/type');
 
 // Middleware
 const tokenVerification = require("../middleware/tokenVerification");
+const permissions = require("../middleware/permissionVerification");
 
 //@ROUTE: get all types 
 router.get('/', tokenVerification,(req, res)=> {
@@ -17,7 +18,7 @@ router.get('/', tokenVerification,(req, res)=> {
 	})
 });
 //@ROUTE: create new type
-router.post('/',tokenVerification,(req, res)=>{
+router.post('/',tokenVerification,permissions.Create,(req, res)=>{
  let newType = Type.create({
 		name: req.body.name
 	});
@@ -52,7 +53,7 @@ router.get('/:id', tokenVerification,(req, res) => {
 	})
 });
 //@ROUTE: update type by PK
-router.put('/:id', tokenVerification,(req, res) => {
+router.put('/:id', tokenVerification,permissions.Update,(req, res) => {
 	let newType = Type.update({
 		name: req.body.name
 	},{
@@ -80,7 +81,7 @@ router.put('/:id', tokenVerification,(req, res) => {
 	})
 });
 //@ROUTE: delete type by PK
-router.delete('/:id', tokenVerification,(req, res) => {
+router.delete('/:id', tokenVerification,permissions.Delete,(req, res) => {
 	let newType = Type.destroy({
 		where: {
 			id: req.params.id

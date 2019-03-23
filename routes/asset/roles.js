@@ -1,8 +1,10 @@
 const Router = require("express").Router();
 const Role = require("../../models/roles");
-const tokenVerification = require("../middleware/tokenVerification");
 
-Router.post("/",tokenVerification,(req,res)=>{
+const tokenVerification = require("../middleware/tokenVerification");
+const permissions = require("../middleware/permissionVerification");
+
+Router.post("/",tokenVerification,permissions.Delete,(req,res)=>{
     let newRole = Role.create({
         name:req.body.name
     });
@@ -14,7 +16,7 @@ Router.post("/",tokenVerification,(req,res)=>{
     })
 });
 
-Router.get("/",tokenVerification,(req,res)=>{
+Router.get("/",tokenVerification,permissions.Delete,(req,res)=>{
     let roles = Role.findAll({});
 
     Promise.all([roles]).then(values=>{
@@ -24,7 +26,7 @@ Router.get("/",tokenVerification,(req,res)=>{
     })
 });
 
-Router.delete("/:id",tokenVerification,(req,res)=>{
+Router.delete("/:id",tokenVerification,permissions.Delete,(req,res)=>{
     let deleteRole = Role.destroy({
         where:{
             id:req.params.id

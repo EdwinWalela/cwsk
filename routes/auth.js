@@ -40,7 +40,7 @@ Router.post('/login',(req,res)=>{
 	});
 
 	Promise.all([user]).then(values=>{
-
+		console.log(values[0])
 		if (values[0] !== null) {
 			let user = values[0];
 
@@ -48,8 +48,7 @@ Router.post('/login',(req,res)=>{
 
 			if(auth){
 				let jwtPayload = {
-					name:user.firstName,
-					email:user.email,
+					id:user.id,
 					perm:user.permissions
 				  }
 
@@ -61,7 +60,7 @@ Router.post('/login',(req,res)=>{
 						if(err){
 						res.status(500).send({err})
 						}else{
-						res.send({token})
+						res.send({token,userId:user.id})
 						}
 					});
 			}else{

@@ -6,6 +6,7 @@ const Type = require("../../models/type");
 
 // Middleware
 const tokenVerification = require("../middleware/tokenVerification");
+const permissions = require("../middleware/permissionVerification");
 
 //@ROUTE: get all tps
 Router.get('/', tokenVerification,(req,res)=>{
@@ -18,7 +19,7 @@ Router.get('/', tokenVerification,(req,res)=>{
     })
 });
 //@ROUTE: create tps
-Router.post('/', tokenVerification,(req,res)=>{
+Router.post('/', tokenVerification,permissions.Create,(req,res)=>{
     let tps = req.body
     let newTps = Tps.create({
         name:tps.name,
@@ -60,7 +61,7 @@ Router.get('/:id', tokenVerification,(req,res)=>{
     })
 });
 //@ROUTE: update tps by PK
-Router.put('/:id', tokenVerification,(req,res)=>{
+Router.put('/:id', tokenVerification,permissions.Update,(req,res)=>{
     let tps = req.body;
 
     let updateTps = Tps.update({
@@ -98,7 +99,7 @@ Router.put('/:id', tokenVerification,(req,res)=>{
     });
 });
 //@ROUTE: delete tps by PK
-Router.delete('/:id', tokenVerification,(req,res)=>{
+Router.delete('/:id', tokenVerification,permissions.Delete,(req,res)=>{
     let deleteTps = Tps.destroy({
       where: {
         id: req.params.id

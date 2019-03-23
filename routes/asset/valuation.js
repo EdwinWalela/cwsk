@@ -6,9 +6,10 @@ const Asset = require('../../models/assets');
 
 // Middleware
 const tokenVerification = require("../middleware/tokenVerification");
+const permissions = require("../middleware/permissionVerification");
 
 //@ROUTE: get all valutation
-Router.get('/',(req,res)=>{
+Router.get('/',tokenVerification,(req,res)=>{
     let allValuations = Valuation.findAll({include:[Asset]});
 
     Promise.all([allValuations]).then(values=>{
@@ -18,7 +19,7 @@ Router.get('/',(req,res)=>{
     });
 })
 //@ROUTE: create valuation
-Router.post('/',(req,res)=>{
+Router.post('/',tokenVerification,permissions.Create,(req,res)=>{
     let valuation = req.body;
 
     let newValuation = Valuation.create({
@@ -43,7 +44,7 @@ Router.post('/',(req,res)=>{
     });
 })
 //@ROUTE: get valuation by PK
-Router.get('/:id',(req,res)=>{
+Router.get('/:id',tokenVerification,(req,res)=>{
     let valuation = Valuation.findByPk(req.params.id,{include:[Asset]});
     Promise.all([valuation]).then(values=>{
         if(values[0] !== null){
@@ -56,7 +57,7 @@ Router.get('/:id',(req,res)=>{
     });
 });
 //@ROUTE: update valuation by PK
-Router.put('/:id',(req,res)=>{
+Router.put('/:id',tokenVerification,permissions.Update,(req,res)=>{
     let valuation = req.body;
 
     let newValuation = Valuation.update({
@@ -87,7 +88,7 @@ Router.put('/:id',(req,res)=>{
     });
 })
 //@ROUTE: delete valuation by PK
-Router.delete('/:id',(req,res)=>{
+Router.delete('/:id',tokenVerification,permissions.Delete,(req,res)=>{
     let newValuation = Valuation.destroy({
         where:{
             id:req.params.id

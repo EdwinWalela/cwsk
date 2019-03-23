@@ -47,10 +47,46 @@ const dbInit = () =>{
         idno:"10000000",
         dob:"1/1/19",
         resetCode:"",
-        permissions:"",
+        permissions:"crud",
         password:"pass",
         confirmed:true,
         roleId:1,
+        tpsId:1
+    });
+    let createOnlyRole = Role.create({
+        name:"creator"
+    });
+    let updateOnlyRole = Role.create({
+        name:"updater"
+    });
+    let createOnlyUser = User.create({
+        firstName:"create",
+        lastName:"only",
+        alias:"creator",
+        phone:"",
+        email:"createonly@mail.com",
+        idno:"10000001",
+        dob:"1/1/19",
+        resetCode:"",
+        permissions:"c",
+        password:"pass",
+        confirmed:true,
+        roleId:2,
+        tpsId:1
+    });
+    let updateOnlyUser = User.create({
+        firstName:"update",
+        lastName:"only",
+        alias:"updater",
+        phone:"",
+        email:"updateonly@mail.com",
+        idno:"10000002",
+        dob:"1/1/19",
+        resetCode:"",
+        permissions:"u",
+        password:"pass",
+        confirmed:true,
+        roleId:3,
         tpsId:1
     });
     let insuranceA = Insurance.create({
@@ -123,10 +159,10 @@ const dbInit = () =>{
     })
 
     Promise.all([newTypeA,newTypeB]).then(values=>{
-        Promise.all([newTps,newAsset,adminRole]).then(values=>{
+        Promise.all([newTps,newAsset,adminRole,createOnlyRole,updateOnlyRole]).then(values=>{
             Promise.all([
-                newAdmin,insuranceA,insuranceB,insuranceC,
-                insuranceD
+                newAdmin,createOnlyUser,updateOnlyUser,insuranceA,
+                insuranceB,insuranceC,insuranceD
             ]).then(values=>{
                 Promise.all([
                     supportA,supportB,supportC,supportD,
