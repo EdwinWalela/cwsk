@@ -7,6 +7,21 @@ const TPS = require("../models/tps");
 
 // MiddleWare
 const userVerification = require("../routes/middleware/userVerification");
+const adminPermission = require("../routes/middleware/permissionVerification").Delete
+
+Router.get('/',adminPermission,(req,res)=>{
+    let users = User.findAll({
+        include:[Role,TPS],
+        attributes:{exclude:["password","confirmed","resetCode","updated_at"]},
+    });
+
+    Promise.all([users]).then(values=>{
+        res.send({users:values[0]})
+    }).catch(err=>{
+        res.status(500).send({err})
+    })
+});
+
 
 Router.get('/:id',(req,res)=>{
 	let user = User.findOne({
