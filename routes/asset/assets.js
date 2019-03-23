@@ -21,20 +21,21 @@ Router.get('/',tokenVerification,(req,res)=>{
 });
 //@ROUTE: create asset
 Router.post('/',tokenVerification,upload.single('pic'),(req,res)=>{
-    console.log(req.file)
     let asset = req.body;
-    
+    let image = req.file
+
     let newAsset = Asset.create({
         name:asset.name,
-        pic:null,
-        //pic:asset.pic, ---- TODO(file storage)
+        pic:image.filename,
         tag:asset.tag,
         cost:asset.cost,
         valuation:asset.valuation,
         insurance:asset.insurance,
         typeId:asset.type,
         tpsId:asset.tps
-    }).then(values => {
+    });
+    
+    Promise.all([newAsset]).then(values => {
        res.status(201).send({msg:"OK"})
     }).catch(err=>{
         if(err.name){
@@ -45,9 +46,9 @@ Router.post('/',tokenVerification,upload.single('pic'),(req,res)=>{
                 }
             });
         }else{
-            res.status(500).send({err});
+            res.status(500).send('err');
         }
-    });
+    })
 })
 //@ROUTE: get asset by PK
 Router.get('/:id',tokenVerification,(req, res) => {
@@ -66,10 +67,10 @@ Router.get('/:id',tokenVerification,(req, res) => {
 //@ROUTE: update asset by PK
 Router.put('/:id',tokenVerification,upload.single('pic'),(req,res)=>{
     let asset = req.body;
-    console.log(req.file)
+    let image = req.file
     let updateAsset = Asset.update({
         name:asset.name,
-        pic:asset.pic,
+        pic:image.filename,
         cost:asset.cost,
         tag:asset.tag,
         valuation:asset.valuation,
