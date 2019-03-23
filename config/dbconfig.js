@@ -1,10 +1,11 @@
 const Sequelize = require("sequelize");
 require('dotenv').config();
+
 // DB connection
 //
 const sequelize = new Sequelize(process.env.DB_NAME,process.env.DB_USER,process.env.DB_PASS,{
     host:process.env.DB_HOST,
-    dialect:'postgres',
+    dialect:process.env.DB_DIALECT,
     operatorsAliases:false,
     pool:{
         max:5,
@@ -24,7 +25,9 @@ sequelize.authenticate()
     });
 
 sequelize.sync({
-  force:false  //  IF YOU SET THIS TO FALSE, IT WONT RECREATE THE DATABASE
+  force:true  //  IF YOU SET THIS TO FALSE, IT WONT RECREATE THE DATABASE
 });
+
+
 
 module.exports = sequelize;

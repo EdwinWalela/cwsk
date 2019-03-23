@@ -4,6 +4,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
+const DB_INIT = require('./config/initializeDB');
+let db;
+
+// Initialize db after 10 seconds
+setTimeout(()=>{
+  db = DB_INIT();
+},10000)
+
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
