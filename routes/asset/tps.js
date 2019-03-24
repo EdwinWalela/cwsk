@@ -28,7 +28,7 @@ Router.post('/', tokenVerification,permissions.Create,(req,res)=>{
         address:tps.address,
         phone:tps.phone,
         type:tps.type,
-        status:tps.status,
+        status:true,
         description: tps.description
     });
 

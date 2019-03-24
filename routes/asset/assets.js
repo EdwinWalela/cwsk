@@ -28,7 +28,7 @@ Router.get('/',tokenVerification,(req,res)=>{
             }
         });
     }else{
-        assets = Asset.find({
+        assets = Asset.findAll({
             include: [Tps,Type]
         });
     }

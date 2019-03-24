@@ -34,7 +34,8 @@ const dbInit = () =>{
         valuation:2000000,
         insurance:"Jubilee Insurance",
         tpsId:1,
-        typeId:2
+        typeId:2,
+        status:true
     });
     let vanAsset = Asset.create({
         name:"Van",
