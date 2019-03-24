@@ -22,7 +22,7 @@ Router.get('/',tokenVerification,adminPermission,(req,res)=>{
     }else if(query === "update"){
         filter = "%u%"
     }else{
-        filter =""
+        filter ="%%"
     }
     let users = User.findAll({
         include:[Role,TPS],
@@ -58,7 +58,7 @@ Router.get('/:id',tokenVerification,(req,res)=>{
 });
 
 Router.put('/:id',tokenVerification,userVerification,(req,res)=>{
-    let user =  req.body;
+    let user = req.body;
     console.log(req.body.firstName)
     console.log(req.params.id)
     let userUpdate = User.update({
