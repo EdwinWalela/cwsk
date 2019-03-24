@@ -122,5 +122,5 @@ Router.delete('/:id',tokenVerification,permissions.Delete,(req,res)=>{
         res.status(500).send({err})
     });
 });
-
+//
 module.exports = Router;
