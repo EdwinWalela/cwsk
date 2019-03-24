@@ -59,6 +59,8 @@ Router.get('/:id',tokenVerification,(req,res)=>{
 
 Router.put('/:id',tokenVerification,userVerification,(req,res)=>{
     let user =  req.body;
+    console.log(user)
+    console.log(req.params.id)
     let userUpdate = User.update({
         firstName:user.firstName,
         lastName:user.lastName,
