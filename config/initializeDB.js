@@ -43,7 +43,8 @@ const dbInit = () =>{
         valuation:1800000,
         insurance:"NSSF Insurance",
         tpsId:1,
-        typeId:2
+        typeId:2,
+        status:true
     });
     let busAsset = Asset.create({
         name:"Bus",
@@ -53,7 +54,8 @@ const dbInit = () =>{
         valuation:1500000,
         insurance:"NHIF Insurance",
         tpsId:1,
-        typeId:2
+        typeId:2,
+        status:true
     });
     let adminRole = Role.create({
         name:"Admin"

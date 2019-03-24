@@ -12,7 +12,26 @@ const permissions = require("../middleware/permissionVerification");
 
 //@ROUTE: get all assets
 Router.get('/',tokenVerification,(req,res)=>{
-    let assets = Asset.findAll({include: [Tps,Type]});
+    let assets;
+    if(req.query.status === "true"){
+        assets = Asset.find({
+            include: [Tps,Type],
+            where:{
+                status:true
+            }
+        });
+    }else if(req.query.status === "false"){
+        assets = Asset.find({
+            include: [Tps,Type],
+            where:{
+                status:false
+            }
+        });
+    }else{
+        assets = Asset.find({
+            include: [Tps,Type]
+        });
+    }
 
     Promise.all([assets]).then(values=>{
         res.send({assets:values[0]})
