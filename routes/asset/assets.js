@@ -68,7 +68,13 @@ Router.get('/:id',tokenVerification,(req, res) => {
 //@ROUTE: update asset by PK
 Router.put('/:id',tokenVerification,permissions.Update,upload.single('pic'),(req,res)=>{
     let asset = req.body;
-    let image = req.file.filename
+    let image;
+    if(typeof req.file !== "undefined"){
+        image = req.file
+    }else{
+        image =""
+    }
+    
     let updateAsset = Asset.update({
         name:asset.name,
         pic:image,
