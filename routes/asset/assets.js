@@ -23,11 +23,11 @@ Router.get('/',tokenVerification,(req,res)=>{
 //@ROUTE: create asset
 Router.post('/',tokenVerification,permissions.Create,upload.single('pic'),(req,res)=>{
     let asset = req.body;
-    let image = req.file
+    let image = req.file.filename
 
     let newAsset = Asset.create({
         name:asset.name,
-        pic:image.filename,
+        pic:image,
         tag:asset.tag,
         cost:asset.cost,
         valuation:asset.valuation,
@@ -68,10 +68,10 @@ Router.get('/:id',tokenVerification,(req, res) => {
 //@ROUTE: update asset by PK
 Router.put('/:id',tokenVerification,permissions.Update,upload.single('pic'),(req,res)=>{
     let asset = req.body;
-    let image = req.file
+    let image = req.file.filename
     let updateAsset = Asset.update({
         name:asset.name,
-        pic:image.filename,
+        pic:image,
         cost:asset.cost,
         tag:asset.tag,
         valuation:asset.valuation,
