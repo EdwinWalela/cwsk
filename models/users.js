@@ -23,7 +23,16 @@ const User = sequelize.define('users',{
       },
       dob: Sequelize.STRING,
       resetCode: Sequelize.STRING,
-      permissions: Sequelize.STRING,
+      permissions:{ 
+        type: Sequelize.STRING,
+        allowNull:true,
+        get(){
+          return this.getDataValue('permissions').split(",")
+        },
+        set(val){
+          this.setDataValue('permissions',val.join())
+        }
+      },
       password: Sequelize.STRING,
       confirmed: Sequelize.BOOLEAN
     },{

@@ -11,6 +11,7 @@ const CreatePermission = (req,res,next) =>{
         }else{
             //check if is permissioned
             let userPermission = payload.user.perm
+            userPermission= userPermission.join(",");
             console.log(userPermission)
             if(userPermission.includes("c")){
                 //authorized
@@ -31,7 +32,7 @@ const UpdatePermission = (req,res,next) =>{
         }else{
             //check if is permissioned
             let userPermission = payload.user.perm
-            console.log(userPermission)
+            userPermission= userPermission.join(",");
             if(userPermission.includes("u")){
                 //authorized
                 next();
@@ -51,7 +52,6 @@ const DeletePermission = (req,res,next) =>{
         }else{
             //check if is permissioned
             let userPermission = payload.user.perm
-            console.log(userPermission)
             if(userPermission.includes("d")){
                 //authorized
                 next();
