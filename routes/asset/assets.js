@@ -23,7 +23,12 @@ Router.get('/',tokenVerification,(req,res)=>{
 //@ROUTE: create asset
 Router.post('/',tokenVerification,permissions.Create,upload.single('pic'),(req,res)=>{
     let asset = req.body;
-    let image = req.file.filename
+    let image;
+    if(typeof req.file !== "undefined"){
+        image = req.file
+    }else{
+        image =""
+    }
 
     let newAsset = Asset.create({
         name:asset.name,
