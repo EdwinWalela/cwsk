@@ -6,13 +6,13 @@ const logger = require('morgan');
 const cors = require('cors');
 
 // --- Initalize DB with dummy data --- //
-// const DB_INIT = require('./config/initializeDB');
-// let db;
+const DB_INIT = require('./config/initializeDB');
+let db;
 
 // Initialize db after 10 seconds
-// setTimeout(()=>{
-//   db = DB_INIT();
-// },13000)
+setTimeout(()=>{
+  db = DB_INIT();
+},13000)
 
 
 const indexRouter = require('./routes/index');

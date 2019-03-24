@@ -22,6 +22,7 @@ const dbInit = () =>{
         address:"Nairobi,Kenya",
         phone:"0700000001",
         typeId:1,
+        type:"home",
         status:true,
         description:"caters for children"
     })
