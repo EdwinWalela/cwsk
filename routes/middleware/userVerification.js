@@ -9,8 +9,10 @@ const UserVerification = (req,res,next) =>{
         if(err){
             res.status(401).send({msg:err.message})
         }else{
+            console.log(userID,req.params.id)
             //check if is permissioned
             let userID = payload.user.id
+            console.log(userID,req.params.id)
             if(userID === req.params.id){
                 //authorized
                 next();
