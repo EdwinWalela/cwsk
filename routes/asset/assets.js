@@ -14,14 +14,14 @@ const permissions = require("../middleware/permissionVerification");
 Router.get('/',tokenVerification,(req,res)=>{
     let assets;
     if(req.query.status === "true"){
-        assets = Asset.find({
+        assets = Asset.findAll({
             include: [Tps,Type],
             where:{
                 status:true
             }
         });
     }else if(req.query.status === "false"){
-        assets = Asset.find({
+        assets = Asset.findAll({
             include: [Tps,Type],
             where:{
                 status:false
