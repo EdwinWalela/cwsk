@@ -38,7 +38,8 @@ Router.post('/',tokenVerification,permissions.Create,upload.single('pic'),(req,r
         valuation:asset.valuation,
         insurance:asset.insurance,
         typeId:asset.type,
-        tpsId:asset.tps
+        tpsId:asset.tps,
+        status:true
     });
     
     Promise.all([newAsset]).then(values => {

@@ -30,8 +30,15 @@ Router.post('/', tokenVerification,permissions.Create,/*upload.single('pic'),*/(
         price:disposal.price,
         assetId:disposal.asset,
     });
+    let disposedAsset = Asset.update({
+        status:false
+    },{
+        where:{
+            id:disposal.asset
+        }
+    })
     
-    Promise.all([newDisposal]).then(values => {
+    Promise.all([newDisposal,disposedAsset]).then(values => {
         res.status(201).send({msg:"OK"})
     }).catch(err=>{
         if(err.name){
@@ -103,8 +110,22 @@ Router.delete('/:id', tokenVerification,permissions.Delete,(req,res)=>{
         id: req.params.id
       }
     });
+    let currentDisposal = Disposal.find({include:[Asset]},{where:{
+        id:req.params.id
+    },});
 
-    Promise.all([deleteDisposal]).then(values=>{
+    Promise.all([deleteDisposal,currentDisposal]).then(values=>{
+        let assetID = values[0].asset.id
+        let updatedAsset = Asset.update({
+            status:true
+        },{where:{
+            id:assetID
+        }});
+        Promise.all([updatedAsset]).then(value=>{
+            console.log("updated asset")
+        }).catch(err=>{
+            console.log("failed to update asset",err)
+        })
         if(values[0]>=1){
             res.status(204).send({});
         }else{

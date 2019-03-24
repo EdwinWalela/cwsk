@@ -28,10 +28,30 @@ const dbInit = () =>{
     let newAsset = Asset.create({
         name:"Ambulance",
         pic:"",
-        tag:"",
+        tag:"tag",
         cost:2000000,
         valuation:2000000,
         insurance:"Jubilee Insurance",
+        tpsId:1,
+        typeId:2
+    });
+    let vanAsset = Asset.create({
+        name:"Van",
+        pic:"",
+        tag:"tag",
+        cost:1500000,
+        valuation:1800000,
+        insurance:"NSSF Insurance",
+        tpsId:1,
+        typeId:2
+    });
+    let busAsset = Asset.create({
+        name:"Bus",
+        pic:"",
+        tag:"tag",
+        cost:12000000,
+        valuation:1500000,
+        insurance:"NHIF Insurance",
         tpsId:1,
         typeId:2
     });
@@ -63,12 +83,12 @@ const dbInit = () =>{
         firstName:"create",
         lastName:"only",
         alias:"creator",
-        phone:"",
+        phone:"0700000001",
         email:"createonly@mail.com",
         idno:"10000001",
         dob:"1/1/19",
         resetCode:"",
-        permissions:[],
+        permissions:["c"],
         password:"pass",
         confirmed:true,
         roleId:2,
@@ -78,12 +98,12 @@ const dbInit = () =>{
         firstName:"update",
         lastName:"only",
         alias:"updater",
-        phone:"",
+        phone:"0712345678",
         email:"updateonly@mail.com",
         idno:"10000002",
         dob:"1/1/19",
         resetCode:"",
-        permissions:[],
+        permissions:["u"],
         password:"pass",
         confirmed:true,
         roleId:3,
@@ -159,7 +179,7 @@ const dbInit = () =>{
     })
 
     Promise.all([newTypeA,newTypeB]).then(values=>{
-        Promise.all([newTps,newAsset,adminRole,createOnlyRole,updateOnlyRole]).then(values=>{
+        Promise.all([newTps,newAsset,vanAsset,busAsset,adminRole,createOnlyRole,updateOnlyRole]).then(values=>{
             Promise.all([
                 newAdmin,createOnlyUser,updateOnlyUser,insuranceA,
                 insuranceB,insuranceC,insuranceD

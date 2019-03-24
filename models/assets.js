@@ -11,7 +11,8 @@ const Asset = sequelize.define('assets',{
     tag:Sequelize.STRING,
     cost: Sequelize.INTEGER,
     valuation:Sequelize.INTEGER,
-    insurance:Sequelize.STRING
+    insurance:Sequelize.STRING,
+    status:Sequelize.BOOLEAN
 },{
     timestamps: true, // timestamps will now be true
     // getterMethods:{
