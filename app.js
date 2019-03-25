@@ -9,6 +9,7 @@ const cors = require('cors');
 const DB_INIT = require('./config/initializeDB');
 let db;
 
+//
 // Initialize db after 10 seconds
 setTimeout(()=>{
   db = DB_INIT();
