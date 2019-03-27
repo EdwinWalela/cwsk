@@ -11,7 +11,10 @@ const permissions = require("../middleware/permissionVerification");
 
 //@ROUTE: get all disposals
 Router.get('/', tokenVerification,(req,res)=>{
-    let disposal = Disposal.findAll({include: [Asset]});
+    let disposal = Disposal.findAll({
+        include: [Asset],
+        
+    });
     
     Promise.all([disposal]).then(values=>{
         res.send({disposals:values[0]})

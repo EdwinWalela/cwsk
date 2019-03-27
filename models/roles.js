@@ -7,14 +7,14 @@ const Role = sequelize.define('roles',{
     },
   },{
     timestamps: true, // timestamps will now be true
-    // getterMethods:{
-    //   created_at: function(){
-    //     return dateFormat(this.createdAt, "mmm dS, yyyy, h:MM:ss TT");
-    //   },
-    //   updated_at: function(){
-    //     return dateFormat(this.updatedAt, "mmm dS, yyyy, h:MM:ss TT");
-    //   }
-    // }
+    getterMethods:{
+      created_at: function(){
+        return dateFormat(this.createdAt, "mmm dS, yyyy, h:MM:ss TT");
+      },
+      updated_at: function(){
+        return dateFormat(this.updatedAt, "mmm dS, yyyy, h:MM:ss TT");
+      }
+    }
 });
 
 module.exports = Role;
