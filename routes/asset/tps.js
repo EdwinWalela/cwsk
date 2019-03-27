@@ -10,11 +10,12 @@ const permissions = require("../middleware/permissionVerification");
 
 //@ROUTE: get all tps
 Router.get('/', tokenVerification,(req,res)=>{
-    let allTps = Tps.findAll({include:[Type]});
+    let allTps = Tps.findAll({});
 
     Promise.all([allTps]).then(values=>{
         res.send({tps:values[0]});
     }).catch(err=>{
+        console.log(err)
         res.status(500).send({err})
     })
 });

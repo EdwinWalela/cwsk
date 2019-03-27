@@ -10,10 +10,10 @@ const Valuation = require("../models/assetValuation");
 
 const dbInit = () =>{
     let newTypeA = Type.create({
-        name:"orphanage"
+        name:"loose"
     })
     let newTypeB = Type.create({
-        name:"vehical"
+        name:"fixed"
     })
     let newTps = TPS.create({
         name:"Nairobi Children's Home",
