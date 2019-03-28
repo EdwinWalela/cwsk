@@ -3,6 +3,8 @@ const Router = require('express').Router();
 // Models
 const Valuation = require('../../models/assetValuation');
 const Asset = require('../../models/assets');
+const TPS = require('../../models/tps');
+const type = require('../../models/type');
 
 // Middleware
 const tokenVerification = require("../middleware/tokenVerification");
@@ -10,7 +12,7 @@ const permissions = require("../middleware/permissionVerification");
 
 //@ROUTE: get all valutation
 Router.get('/',tokenVerification,(req,res)=>{
-    let allValuations = Valuation.findAll({include:[Asset]});
+    let allValuations = Valuation.findAll({include:[Asset,TPS,type]});
 
     Promise.all([allValuations]).then(values=>{
         res.send({valuations:values[0]});
@@ -46,7 +48,7 @@ Router.post('/',tokenVerification,permissions.Create,(req,res)=>{
 })
 //@ROUTE: get valuation by PK
 Router.get('/:id',tokenVerification,(req,res)=>{
-    let valuation = Valuation.findByPk(req.params.id,{include:[Asset]});
+    let valuation = Valuation.findByPk(req.params.id,{include:[Asset,TPS,type]});
     Promise.all([valuation]).then(values=>{
         if(values[0] !== null){
             res.send({valuation:values[0]});
