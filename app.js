@@ -7,13 +7,17 @@ const cors = require('cors');
 
 // --- Initalize DB with dummy data --- //
 const DB_INIT = require('./config/initializeDB');
+const sequelize = require("./config/dbconfig");
 let db;
 
-//
+sequelize.sync({
+  force:true  //  IF YOU SET THIS TO FALSE, IT WONT RECREATE THE DATABASE
+});
 // Initialize db after 10 seconds
 setTimeout(()=>{
-  db = DB_INIT();
-},13000)
+ // db = DB_INIT();
+  
+},20000)
 
 
 const indexRouter = require('./routes/index');
@@ -30,6 +34,7 @@ const disposalRouter = require('./routes/asset/disposal');
 const roleRouter =require("./routes/asset/roles");
 const reportRouter = require("./routes/asset/report");
 const userRouter = require("./routes/users");
+const insuranceFirmRouter = require("./routes/asset/insuranceFirm");
 
 const app = express();
 
@@ -47,12 +52,14 @@ app.use("/public",express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', indexRouter);
+
 app.use('/auth', authRouter);
 app.use('/users',userRouter);
 app.use('/assets', assetsRouter);
 app.use('/tps', tpsRouter);
 app.use('/types', typeRouter);
 app.use('/insurances',insuranceRouter);
+app.use('/insurancefirms',insuranceFirmRouter);
 app.use('/support',supportRouter);
 app.use('/valuations',valuationRouter);
 app.use('/disposals',disposalRouter);

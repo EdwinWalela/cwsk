@@ -5,6 +5,8 @@ const upload = require('../../config/fileStorage');
 const Asset = require("../../models/assets");
 const Tps = require('../../models/tps');
 const Type = require('../../models/type');
+const Support = require('../../models/support');
+const Valuation = require('../../models/assetValuation')
 
 // Middleware
 const tokenVerification = require("../middleware/tokenVerification");
@@ -79,9 +81,24 @@ Router.post('/',tokenVerification,permissions.Create,upload.single('pic'),(req,r
 //@ROUTE: get asset by PK
 Router.get('/:id',tokenVerification,(req, res) => {
     let asset = Asset.findByPk(req.params.id,{include: [Tps,Type]});
-    Promise.all([asset]).then(values=>{
+    let support = Support.findAll({
+        where:{
+            assetId:req.params.id
+        }
+    })
+
+    let valuation = Valuation.findAll({
+        where:{
+            assetId:req.params.id
+        }
+    })
+    Promise.all([asset,support,valuation]).then(values=>{
         if(values[0] !== null){
-            res.send({asset:values[0]});
+            res.send({
+                asset:values[0],
+                valuations:values[1],
+                supports:values[2]
+            });
         }else{
             res.status(404).send({msg:"Asset Not Found"})
         }

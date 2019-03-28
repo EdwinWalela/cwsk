@@ -3,6 +3,7 @@ const Router = require('express').Router();
 // Models
 const Tps = require('../../models/tps');
 const Type = require("../../models/type");
+const Asset = require("../../models/assets");
 
 // Middleware
 const tokenVerification = require("../middleware/tokenVerification");
@@ -51,9 +52,17 @@ Router.post('/', tokenVerification,permissions.Create,(req,res)=>{
 //@ROUTE: get tps by PK
 Router.get('/:id', tokenVerification,(req,res)=>{
     let tps = Tps.findByPk(req.params.id);
-    Promise.all([tps]).then(values=>{
+    let assets = Asset.findAll({
+        include:[Type]
+    },{where:{
+        tpsId:req.params.id
+    }})
+    Promise.all([tps,assets]).then(values=>{
         if(values[0] !==null){
-            res.send({tps:values[0]})
+            res.send({
+                tps:values[0],
+                assets:values[1]
+            })
         } else{
             res.status(404).send({msg:"TPS Not Found"});
         }

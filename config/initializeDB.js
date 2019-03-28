@@ -4,6 +4,7 @@ const Asset = require("../models/assets");
 const Role = require("../models/roles");
 const User = require("../models/users");
 const Insurance = require("../models/insurance");
+const InsuranceFirm = require("../models/insuranceFirm");
 const Support = require("../models/support");
 const Valuation = require("../models/assetValuation");
 
@@ -113,26 +114,38 @@ const dbInit = () =>{
         roleId:3,
         tpsId:1
     });
+
+    let insuranceFirmA = InsuranceFirm.create({
+        name:"Jubilee"
+    });
+    let insuranceFirmB = InsuranceFirm.create({
+        name:"NHIF"
+    });
+    let insuranceFirmC = InsuranceFirm.create({
+        name:"Britam"
+    });
+
+
     let insuranceA = Insurance.create({
-        name:"first insurance",
+        name:"Jubilee",
         cost:"30000",
         details:"insuarance details",
         assetId:1
     })
     let insuranceB = Insurance.create({
-        name:"second insurance",
+        name:"NHIF",
         cost:"30000",
         details:"insuarance details",
         assetId:1
     })
     let insuranceC = Insurance.create({
-        name:"third insurance",
+        name:"Britam",
         cost:"30000",
         details:"insuarance details",
         assetId:1
     })
     let insuranceD = Insurance.create({
-        name:"fourth insurance",
+        name:"NHIF",
         cost:"30000",
         details:"insuarance details",
         assetId:1
@@ -186,10 +199,10 @@ const dbInit = () =>{
         Promise.all([newTps,newAsset,vanAsset,busAsset,adminRole,createOnlyRole,updateOnlyRole]).then(values=>{
             Promise.all([
                 newAdmin,createOnlyUser,updateOnlyUser,insuranceA,
-                insuranceB,insuranceC,insuranceD
+                insuranceB,insuranceC,insuranceD,insuranceFirmC
             ]).then(values=>{
                 Promise.all([
-                    supportA,supportB,supportC,supportD,
+                    supportA,supportB,supportC,supportD,insuranceFirmA,insuranceFirmB,
                     valuationA,valuationB,valuationC,valuationD
                 ]).then(values=>{
                     
