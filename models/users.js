@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const bcrypt = require('bcryptjs');
+const dateFormat = require('dateformat');
 
 //CONFIGS
 const sequelize = require('../config/dbconfig');

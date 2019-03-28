@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 
 const Asset = require('./assets');
 const sequelize = require('../config/dbconfig');
-
+const dateFormat = require("dateformat")
 const AssetValuation = sequelize.define('assetValuation',{
     price_now:{
         type:Sequelize.STRING

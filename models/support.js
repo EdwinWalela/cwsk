@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require('../config/dbconfig');
+const dateFormat = require('dateformat');
 
 //MODELS
 const Asset = require('./assets');

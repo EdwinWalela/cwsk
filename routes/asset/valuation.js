@@ -15,7 +15,8 @@ Router.get('/',tokenVerification,(req,res)=>{
     Promise.all([allValuations]).then(values=>{
         res.send({valuations:values[0]});
     }).catch(err=>{
-        res.status(500).send({})
+        res.status(500).send({err})
+        console.log(err)
     });
 })
 //@ROUTE: create valuation
