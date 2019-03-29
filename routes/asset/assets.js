@@ -54,13 +54,14 @@ Router.post('/',tokenVerification,permissions.Create,upload.single('pic'),(req,r
         pic:image,
         tag:asset.tag,
         cost:asset.cost,
+        details:asset.details,
         valuation:asset.valuation,
         insurance:asset.insurance,
         typeId:asset.type,
         tpsId:asset.tps,
         status:true
     });
-    
+
     Promise.all([newAsset]).then(values => {
        res.status(201).send({msg:"OK"})
     }).catch(err=>{
@@ -85,7 +86,7 @@ Router.get('/:id',tokenVerification,(req, res) => {
         }else{
             res.status(404).send({msg:"Asset Not Found"})
         }
-       
+
     }).catch(err=>{
         res.status(500).send({err})
     });
@@ -99,12 +100,13 @@ Router.put('/:id',tokenVerification,permissions.Update,upload.single('pic'),(req
     }else{
         image =""
     }
-    
+
     let updateAsset = Asset.update({
         name:asset.name,
         pic:image,
         cost:asset.cost,
         tag:asset.tag,
+        details:asset.details,
         valuation:asset.valuation,
         insurance:asset.insurance,
         typeId:asset.type,
