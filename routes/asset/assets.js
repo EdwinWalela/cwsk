@@ -96,8 +96,8 @@ Router.get('/:id',tokenVerification,(req, res) => {
         if(values[0] !== null){
             res.send({
                 asset:values[0],
-                valuations:values[1],
-                supports:values[2]
+                valuations:values[2],
+                supports:values[1]
             });
         }else{
             res.status(404).send({msg:"Asset Not Found"})

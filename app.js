@@ -15,9 +15,9 @@ sequelize.sync({
 });
 // Initialize db after 10 seconds
 setTimeout(()=>{
-  db = DB_INIT();
+  //db = DB_INIT();
   
-},5000)
+},15000)
 
 
 const indexRouter = require('./routes/index');
