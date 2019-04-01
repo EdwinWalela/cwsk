@@ -18,7 +18,7 @@ Router.get('/',tokenVerification,(req,res)=>{
         res.send({
             assets:values[0],
             tps:values[1],
-            assetValuation:values[2]
+            assetValuation:values[2][0]
         });
     }).catch(err=>{
         res.status(500).send({err})
