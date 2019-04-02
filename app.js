@@ -11,11 +11,11 @@ const sequelize = require("./config/dbconfig");
 let db;
 
 sequelize.sync({
-  force:true  //  IF YOU SET THIS TO FALSE, IT WONT RECREATE THE DATABASE
+  force:false  //  IF YOU SET THIS TO FALSE, IT WONT RECREATE THE DATABASE
 });
 // Initialize db after 10 seconds
 setTimeout(()=>{
-  db = DB_INIT();
+  //  db = DB_INIT();
   
 },15000)
 

@@ -11,7 +11,7 @@ const AssetValuation = sequelize.define('assetValuation',{
         type:Sequelize.STRING
     }
   },{
-    timestamps: true, // timestamps will now be true
+    timestamps: false, // timestamps will now be true
     getterMethods:{
       created_at: function(){
         return dateFormat(this.createdAt, "mmm dS, yyyy, h:MM:ss TT");

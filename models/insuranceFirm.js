@@ -17,4 +17,5 @@ const InsuranceFirm = sequelize.define('insurance_firm',{
     }
   });
 
+
 module.exports = InsuranceFirm;

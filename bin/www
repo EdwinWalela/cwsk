@@ -9,8 +9,8 @@ var debug = require('debug')('cwsk2:server');
 var http = require('http');
 setTimeout(()=>{
   console.log("---------------------------------------\n  listening to requests on port ",process.env.PORT,"\n")
-  console.log("  Database dialect ",process.env.DB_DIALECT,"\n---------------------------------------\n")
-},15000)
+  console.log("  Database dialect:",process.env.DB_DIALECT,"\n---------------------------------------\n")
+},13000)
 
 /**
  * Get port from environment and store in Express.

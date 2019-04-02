@@ -2,6 +2,7 @@ const Router = require('express').Router();
 
 // Models
 const Insurance = require('../../models/insurance');
+const InsuranceFirm = require("../../models/insuranceFirm")
 const Asset = require('../../models/assets');
 
 // Middleware
@@ -10,11 +11,17 @@ const permissions = require("../middleware/permissionVerification");
 
 //@ROUTE: get all insurances
 Router.get('/', tokenVerification,(req,res)=>{
-    let allInsurance = Insurance.findAll({include:[Asset]});
+    let allInsurance = Insurance.findAll({
+        include:[Asset,InsuranceFirm],
+        attributes:{
+            // exclude:["created_at","updated_at"]
+        }
+    });
 
     Promise.all([allInsurance]).then(values=>{
         res.send({insurances:values[0]});
     }).catch(err=>{
+        console.log(err)
         res.status(500).send({insurances:[]});
     });
 });
@@ -26,7 +33,8 @@ Router.post('/', tokenVerification,permissions.Create,(req,res)=>{
         name:insurance.name,
         cost:insurance.cost,
         details:insurance.details,
-        assetId:insurance.asset
+        assetId:insurance.asset,
+        insuranceFirmId:insurance.insuranceFirm
     });
 
     Promise.all([newInsurance]).then(values=>{
@@ -46,7 +54,7 @@ Router.post('/', tokenVerification,permissions.Create,(req,res)=>{
 });
 //@ROUTE: get insurance by PK
 Router.get('/:id', tokenVerification,(req,res)=>{
-    let insurance = Insurance.findByPk(req.params.id,{include:[Asset]});
+    let insurance = Insurance.findByPk(req.params.id,{include:[Asset,insuranceFirm]});
     Promise.all([insurance]).then(values=>{
         if(values[0] !== null){
             res.send({insurance:values[0]});
@@ -65,7 +73,8 @@ Router.put('/:id', tokenVerification,permissions.Update,(req,res)=>{
         name:insurance.name,
         cost:insurance.cost,
         details:insurance.details,
-        assetId:insurance.asset
+        assetId:insurance.asset,
+        insuranceFirmId:insurance.insuranceFirm
     },{
         where: {
           id: req.params.id

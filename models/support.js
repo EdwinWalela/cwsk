@@ -12,7 +12,7 @@ const Support = sequelize.define('support',{
     cost: Sequelize.STRING,
     details: Sequelize.TEXT,
   },{
-    timestamps: true, // timestamps will now be true
+    timestamps: false, // timestamps will now be true
     getterMethods:{
       created_at: function(){
         return dateFormat(this.createdAt, "mmm dS, yyyy, h:MM:ss TT");

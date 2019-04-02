@@ -7,7 +7,8 @@ const Tps = require('../../models/tps');
 const Type = require('../../models/type');
 const Support = require('../../models/support');
 const Valuation = require('../../models/assetValuation')
-
+const InsuranceFirm=require("../../models/insuranceFirm");
+const Insurance = require("../../models/insurance");
 // Middleware
 const tokenVerification = require("../middleware/tokenVerification");
 const permissions = require("../middleware/permissionVerification");
@@ -17,21 +18,21 @@ Router.get('/',tokenVerification,(req,res)=>{
     let assets;
     if(req.query.status === "true"){
         assets = Asset.findAll({
-            include: [Tps,Type],
+            include: [Tps,Type,InsuranceFirm],
             where:{
                 status:true
             }
         });
     }else if(req.query.status === "false"){
         assets = Asset.findAll({
-            include: [Tps,Type],
+            include: [Tps,Type,InsuranceFirm],
             where:{
                 status:false
             }
         });
     }else{
         assets = Asset.findAll({
-            include: [Tps,Type]
+            include: [Tps,Type,InsuranceFirm]
         });
     }
 
@@ -58,7 +59,7 @@ Router.post('/',tokenVerification,permissions.Create,upload.single('pic'),(req,r
         cost:asset.cost,
         details:asset.details,
         valuation:asset.valuation,
-        insurance:asset.insurance,
+        insuranceFirmId:asset.insuranceFirm,
         typeId:asset.type,
         tpsId:asset.tps,
         status:true
@@ -81,24 +82,29 @@ Router.post('/',tokenVerification,permissions.Create,upload.single('pic'),(req,r
 })
 //@ROUTE: get asset by PK
 Router.get('/:id',tokenVerification,(req, res) => {
-    let asset = Asset.findByPk(req.params.id,{include: [Tps,Type]});
+    let asset = Asset.findByPk(req.params.id,{include: [Tps,Type,InsuranceFirm]});
     let support = Support.findAll({
         where:{
             assetId:req.params.id
         }
     })
-
+    let insurance = Insurance.findAll({
+        where:{
+            assetId:req.param.id
+        }
+    })
     let valuation = Valuation.findAll({
         where:{
             assetId:req.params.id
         }
     })
-    Promise.all([asset,support,valuation]).then(values=>{
+    Promise.all([asset,support,valuation,insurance]).then(values=>{
         if(values[0] !== null){
             res.send({
                 asset:values[0],
+                supports:values[1],
                 valuations:values[2],
-                supports:values[1]
+                insurance:values[3]
             });
         }else{
             res.status(404).send({msg:"Asset Not Found"})
@@ -115,7 +121,7 @@ Router.put('/:id',tokenVerification,permissions.Update,upload.single('pic'),(req
     if(typeof req.file !== "undefined"){
         image = req.file
     }else{
-        image =""
+        image = ""
     }
 
     let updateAsset = Asset.update({
@@ -125,7 +131,7 @@ Router.put('/:id',tokenVerification,permissions.Update,upload.single('pic'),(req
         tag:asset.tag,
         details:asset.details,
         valuation:asset.valuation,
-        insurance:asset.insurance,
+        insuranceFirmId:asset.insuranceFirm,
         typeId:asset.type,
         tpsId:asset.tps,
     },{

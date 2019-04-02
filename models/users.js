@@ -37,7 +37,7 @@ const User = sequelize.define('users',{
       password: Sequelize.STRING,
       confirmed: Sequelize.BOOLEAN
     },{
-      timestamps: true, // timestamps will now be true
+      timestamps: false, // timestamps will now be true
       getterMethods:{
         created_at: function(){
           return dateFormat(this.createdAt, "mmm dS, yyyy, h:MM:ss TT");

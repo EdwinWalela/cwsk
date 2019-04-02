@@ -16,6 +16,15 @@ const dbInit = () =>{
     let newTypeB = Type.create({
         name:"fixed"
     })
+    let insuranceFirmA = InsuranceFirm.create({
+        name:"Jubilee"
+    });
+    let insuranceFirmB = InsuranceFirm.create({
+        name:"NHIF"
+    });
+    let insuranceFirmC = InsuranceFirm.create({
+        name:"Britam"
+    });
     let newTps = TPS.create({
         name:"Nairobi Children's Home",
         alias:"NHC",
@@ -33,7 +42,7 @@ const dbInit = () =>{
         tag:"tag",
         cost:2000000,
         valuation:2000000,
-        insurance:"Jubilee Insurance",
+        insuranceFirmId:1,
         tpsId:1,
         typeId:2,
         status:true
@@ -44,7 +53,7 @@ const dbInit = () =>{
         tag:"tag",
         cost:1500000,
         valuation:1800000,
-        insurance:"NSSF Insurance",
+        insuranceFirmId:2,
         tpsId:1,
         typeId:2,
         status:true
@@ -55,7 +64,7 @@ const dbInit = () =>{
         tag:"tag",
         cost:12000000,
         valuation:1500000,
-        insurance:"NHIF Insurance",
+        insuranceFirmId:3,
         tpsId:1,
         typeId:2,
         status:true
@@ -114,41 +123,29 @@ const dbInit = () =>{
         roleId:3,
         tpsId:1
     });
-
-    let insuranceFirmA = InsuranceFirm.create({
-        name:"Jubilee"
-    });
-    let insuranceFirmB = InsuranceFirm.create({
-        name:"NHIF"
-    });
-    let insuranceFirmC = InsuranceFirm.create({
-        name:"Britam"
-    });
-
-
     let insuranceA = Insurance.create({
-        name:"Jubilee",
-        cost:"30000",
+        cost:30000,
         details:"insuarance details",
-        assetId:1
+        assetId:1,
+        insuranceFirmId:1
     })
     let insuranceB = Insurance.create({
-        name:"NHIF",
-        cost:"30000",
+        cost:30000,
         details:"insuarance details",
-        assetId:1
+        assetId:1,
+        insuranceFirmId:2
     })
     let insuranceC = Insurance.create({
-        name:"Britam",
-        cost:"30000",
+        cost:30000,
         details:"insuarance details",
-        assetId:1
+        assetId:1,
+        insuranceFirmId:3
     })
     let insuranceD = Insurance.create({
-        name:"NHIF",
-        cost:"30000",
+        cost:30000,
         details:"insuarance details",
-        assetId:1
+        assetId:1,
+        insuranceFirmId:1
     })
     let supportA = Support.create({
         name:"support one",
@@ -196,16 +193,20 @@ const dbInit = () =>{
     })
 
     Promise.all([newTypeA,newTypeB]).then(values=>{
-        Promise.all([newTps,newAsset,vanAsset,busAsset,adminRole,createOnlyRole,updateOnlyRole]).then(values=>{
+        Promise.all([
+            newTps,insuranceFirmA,insuranceFirmB,insuranceFirmC,
+           adminRole,createOnlyRole,updateOnlyRole
+        ]).then(values=>{
             Promise.all([
-                newAdmin,createOnlyUser,updateOnlyUser,insuranceA,
-                insuranceB,insuranceC,insuranceD,insuranceFirmC
+                newAdmin,createOnlyUser,updateOnlyUser,newAsset,vanAsset,busAsset,   
             ]).then(values=>{
                 Promise.all([
-                    supportA,supportB,supportC,supportD,insuranceFirmA,insuranceFirmB,
-                    valuationA,valuationB,valuationC,valuationD
+                    supportA,supportB,supportC,
+                   supportD,insuranceA,insuranceB,insuranceC,insuranceD,     
                 ]).then(values=>{
-                    
+                    Promise.all([valuationA,valuationB,valuationC,valuationD]).then(values=>{
+
+                    })
                 })
             })
         })
