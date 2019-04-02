@@ -5,10 +5,10 @@ const sequelize = require('../config/dbconfig');
 const dateFormat = require("dateformat")
 const AssetValuation = sequelize.define('assetValuation',{
     price_now:{
-        type:Sequelize.STRING
+        type:Sequelize.INTEGER
     },
     details:{
-        type:Sequelize.STRING
+        type:Sequelize.INTEGER
     }
   },{
     timestamps: false, // timestamps will now be true

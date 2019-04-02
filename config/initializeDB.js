@@ -172,22 +172,22 @@ const dbInit = () =>{
         assetId:1
     })
     let valuationA = Valuation.create({
-        price_now:"1800000",
+        price_now:1800000,
         details:"valuation details",
         assetId:1
     })
     let valuationB = Valuation.create({
-        price_now:"1600000",
+        price_now:1600000,
         details:"valuation details",
         assetId:1
     })
     let valuationC = Valuation.create({
-        price_now:"1500000",
+        price_now:1500000,
         details:"valuation details",
         assetId:1
     })
     let valuationD = Valuation.create({
-        price_now:"1200000",
+        price_now:1200000,
         details:"valuation details",
         assetId:1
     })
