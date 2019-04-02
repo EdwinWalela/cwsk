@@ -9,7 +9,7 @@ const Disposal = sequelize.define('disposal',{
         type:Sequelize.TEXT
     },
     price:{
-        type:Sequelize.STRING
+        type:Sequelize.INTEGER
     },
     pic:{
         type:Sequelize.STRING

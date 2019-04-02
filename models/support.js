@@ -9,7 +9,7 @@ const Support = sequelize.define('support',{
     name:{
         type:Sequelize.STRING
     },
-    cost: Sequelize.STRING,
+    cost: Sequelize.INTEGER,
     details: Sequelize.TEXT,
   },{
     timestamps: false, // timestamps will now be true
