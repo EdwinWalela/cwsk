@@ -113,7 +113,7 @@ Router.get('/:id',tokenVerification,(req, res) => {
     }).catch(err=>{
         res.status(500).send({err})
     });
-});
+}); 
 //@ROUTE: update asset by PK
 Router.put('/:id',tokenVerification,permissions.Update,upload.single('pic'),(req,res)=>{
     let asset = req.body;
