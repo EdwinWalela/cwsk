@@ -12,10 +12,7 @@ const permissions = require("../middleware/permissionVerification");
 //@ROUTE: get all insurances
 Router.get('/', tokenVerification,(req,res)=>{
     let allInsurance = Insurance.findAll({
-        include:[Asset,InsuranceFirm],
-        attributes:{
-            // exclude:["created_at","updated_at"]
-        }
+        include:[Asset,InsuranceFirm]
     });
 
     Promise.all([allInsurance]).then(values=>{
@@ -54,7 +51,7 @@ Router.post('/', tokenVerification,permissions.Create,(req,res)=>{
 });
 //@ROUTE: get insurance by PK
 Router.get('/:id', tokenVerification,(req,res)=>{
-    let insurance = Insurance.findByPk(req.params.id,{include:[Asset,insuranceFirm]});
+    let insurance = Insurance.findByPk(req.params.id,{include:[Asset,InsuranceFirm]});
     Promise.all([insurance]).then(values=>{
         if(values[0] !== null){
             res.send({insurance:values[0]});
