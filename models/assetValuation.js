@@ -8,7 +8,7 @@ const AssetValuation = sequelize.define('assetValuation',{
         type:Sequelize.INTEGER
     },
     details:{
-        type:Sequelize.INTEGER
+        type:Sequelize.STRING
     }
   },{
     timestamps: false, // timestamps will now be true
